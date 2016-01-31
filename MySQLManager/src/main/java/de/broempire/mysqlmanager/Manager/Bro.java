@@ -88,7 +88,7 @@ public class Bro {
         Long lastonline = System.currentTimeMillis();
         
         if (!UUIDexists(uuid)) {
-            mySQL.update("INSERT INTO Players (UUID, Last-Name, Group, Coins, First-Online, Last-Online, Ban-Points) VALUES ('" + uuid + "', '" + Bukkit.getPlayer(UUID.fromString(uuid)) + "', '§eSpieler', '100', '" + firstonline + "', '" + lastonline + "', '0'");
+            mySQL.update("INSERT INTO Players (UUID, Last-Name, Group, Coins, First-Online, Last-Online, Ban-Points) VALUES ('" + uuid + "', '" + Bukkit.getPlayer(UUID.fromString(uuid)) + "', 'PLAYER', '100', '" + firstonline + "', '" + lastonline + "', '0'");
         }
     }
     public String getGroup() {
