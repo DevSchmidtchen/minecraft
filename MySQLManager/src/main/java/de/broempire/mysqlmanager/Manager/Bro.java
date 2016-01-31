@@ -8,9 +8,6 @@ package de.broempire.mysqlmanager.Manager;
 import de.broempire.mysqlmanager.main;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -20,8 +17,6 @@ import org.bukkit.plugin.Plugin;
  * @author Matti
  */
 public class Bro {
-    
-    SimpleDateFormat simpleDateFormat;
     
     private static MySQL mySQL;
     
