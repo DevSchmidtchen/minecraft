@@ -2,6 +2,7 @@ package me.schmidtchen.minivaro.configs;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.schmidtchen.minivaro.configs.converter.LocationConverter;
 import me.schmidtchen.minivaro.configs.converter.TeamConverter;
 import me.schmidtchen.minivaro.utils.VaroTeam;
 import net.cubespace.Yamler.Config.Config;
@@ -24,6 +25,7 @@ public class TeamConfig extends Config {
         CONFIG_FILE = file;
         try {
             addConverter(TeamConverter.class);
+            addConverter(LocationConverter.class);
         } catch (InvalidConverterException exception) {
             exception.printStackTrace();
         }

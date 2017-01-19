@@ -9,6 +9,7 @@ import me.schmidtchen.minivaro.listeners.PlayerDeathListener;
 import me.schmidtchen.minivaro.listeners.ServerListener;
 import me.schmidtchen.minivaro.manager.TeamManager;
 import me.schmidtchen.minivaro.manager.WorldManager;
+import net.cubespace.Yamler.Config.InvalidConfigurationException;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,6 +39,13 @@ public class MiniVaro extends JavaPlugin {
 
         mainConfig = new MainConfig(new File(getDataFolder(), "config.yml"));
         teamConfig = new TeamConfig(new File(getDataFolder(), "teams.yml"));
+
+        try {
+            mainConfig.init();
+            teamConfig.init();
+        } catch (InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
 
         registerEvents();
         registerCommands();

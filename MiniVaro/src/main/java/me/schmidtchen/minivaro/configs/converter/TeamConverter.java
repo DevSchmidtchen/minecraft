@@ -1,8 +1,10 @@
 package me.schmidtchen.minivaro.configs.converter;
 
 import me.schmidtchen.minivaro.utils.VaroTeam;
+import net.cubespace.Yamler.Config.ConfigSection;
 import net.cubespace.Yamler.Config.Converter.Converter;
 import org.bukkit.Color;
+import org.bukkit.Location;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
@@ -23,14 +25,24 @@ public class TeamConverter implements Converter{
         info.put("name", team.getName());
         info.put("color", team.getColor().serialize());
         info.put("members", team.getMembers());
+        info.put("teamchest", team.getTeamChest());
 
         return info;
     }
 
     public Object fromConfig(Class<?> aClass, Object o, ParameterizedType parameterizedType) throws Exception {
-        Map info = (HashMap) o;
+        Map info;
 
-        return new VaroTeam(Color.deserialize((Map<String, Object>) info.get("color")), (String) info.get("name"), (List<UUID>) info.get("members"));
+        if (o instanceof Map) {
+            info = (Map) o;
+        } else {
+            info = ((ConfigSection) o).getRawMap();
+        }
+
+        VaroTeam varoTeam = new VaroTeam(Color.deserialize((Map<String, Object>) info.get("color")), (String) info.get("name"), (List<UUID>) info.get("members"));
+        varoTeam.setTeamchest((Location) info.get("teamchest"));
+
+        return varoTeam;
     }
 
     public boolean supports(Class<?> aClass) {
