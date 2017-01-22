@@ -7,6 +7,7 @@ import me.schmidtchen.minivaro.configs.MainConfig;
 import me.schmidtchen.minivaro.configs.TeamConfig;
 import me.schmidtchen.minivaro.listeners.PlayerDeathListener;
 import me.schmidtchen.minivaro.listeners.ServerListener;
+import me.schmidtchen.minivaro.manager.MenuManager;
 import me.schmidtchen.minivaro.manager.TeamManager;
 import me.schmidtchen.minivaro.manager.WorldManager;
 import net.cubespace.Yamler.Config.InvalidConfigurationException;
@@ -27,6 +28,7 @@ public class MiniVaro extends JavaPlugin {
 
     public WorldManager worldManager;
     public TeamManager teamManager;
+    public MenuManager menuManager;
 
     public String prefix = "§6VaroBuild §8» §7";
 
@@ -52,6 +54,7 @@ public class MiniVaro extends JavaPlugin {
 
         worldManager = new WorldManager();
         teamManager = new TeamManager();
+        menuManager = new MenuManager();
 
         System.out.println("[VaroBuild] Plugin started!");
     }
