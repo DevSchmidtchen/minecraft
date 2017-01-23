@@ -1,10 +1,13 @@
 package me.schmidtchen.minivaro.manager;
 
 import me.schmidtchen.minivaro.utils.Menu;
+import me.schmidtchen.minivaro.utils.MenuItem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +17,7 @@ public class MenuManager {
 
     public Map<Player, Menu> current;
     public String inventoryPrefix;
+    public List<MenuItem> menuItems;
 
     public MenuManager() {
         current = new HashMap<>();
@@ -21,7 +25,7 @@ public class MenuManager {
     }
 
     public void openVaroInventory(Player player) {
-        Bukkit.getServer().createInventory(null, player.isOp() ? 45 : 27, inventoryPrefix + Menu.MAIN.name());
+        openMenu(player, Menu.SWITCH);
     }
 
     public void createNewTeam() {
@@ -44,8 +48,13 @@ public class MenuManager {
 
     }
 
-    public void openMenu(Player p, Menu menu) {
+    public void confirm() {
 
+    }
+
+    public void openMenu(Player player, Menu menu) {
+        current.put(player, menu);
+        Inventory inventory = Bukkit.getServer().createInventory(null, menu.getSize(), inventoryPrefix + menu.getName());
     }
 
 }
