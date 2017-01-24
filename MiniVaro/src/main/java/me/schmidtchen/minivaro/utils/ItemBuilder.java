@@ -20,10 +20,16 @@ public class ItemBuilder {
     private Material material;
     private int amount = 1;
     private short data = 0;
+    private ItemMeta itemMeta;
 
     public ItemBuilder(Material material) {
         this.material = material;
         lore = new ArrayList<>();
+    }
+
+    public ItemBuilder setItemMeta(ItemMeta itemMeta) {
+        this.itemMeta = itemMeta;
+        return this;
     }
 
     public ItemBuilder setDisplayName(String displayName) {
@@ -59,10 +65,14 @@ public class ItemBuilder {
 
     public ItemStack build() {
         ItemStack itemStack = new ItemStack(material, amount);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(displayName);
-        itemMeta.setLore(lore);
-        itemStack.setItemMeta(itemMeta);
+        if (itemMeta != null) {
+            itemStack.setItemMeta(itemMeta);
+        } else {
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.setDisplayName(displayName);
+            meta.setLore(lore);
+            itemStack.setItemMeta(meta);
+        }
 
         if (data != 0) itemStack.setDurability(data);
 

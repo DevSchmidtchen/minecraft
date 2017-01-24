@@ -20,8 +20,8 @@ public class MenuListener implements Listener {
 
         Player player = (Player) event.getWhoClicked();
 
-        if (MiniVaro.getInstance().getMenuManager().current.containsKey(player)) {
-            for (MenuItem menuItem : MiniVaro.getInstance().getMenuManager().menuItems) {
+        if (MiniVaro.getInstance().getMenuManager().getCurrent().containsKey(player)) {
+            for (MenuItem menuItem : MiniVaro.getInstance().getMenuManager().getMenuItems()) {
                 if (event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().hasDisplayName() && menuItem.getDisplayName().equals(event.getCurrentItem().getItemMeta().getDisplayName())) {
                     menuItem.onClick(player);
                     return;

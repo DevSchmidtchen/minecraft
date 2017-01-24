@@ -1,14 +1,12 @@
 package me.schmidtchen.minivaro.utils;
 
 import lombok.Getter;
-import me.schmidtchen.minivaro.items.SwitchItem;
-import org.bukkit.Material;
+import me.schmidtchen.minivaro.MiniVaro;
+import me.schmidtchen.minivaro.items.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,8 +19,9 @@ public enum Menu {
     SWITCH("Spielmodus wechseln", 27),
     CREATE("Team erstellen", 27),
     LIST("Teamliste", 27),
-    REMOVE("Team entfernen", 27),
-    RESTART("Varo neustarten", 27);
+    INFO("Teaminformationen", 27),
+    RESTART("Varo neustarten", 27),
+    CONFIRM("Bestätigen", 27);
 
     String name;
     int size;
@@ -32,32 +31,54 @@ public enum Menu {
         this.size = size;
     }
 
-    private Map<Integer, ItemStack> getContent(Player player) {
+    public Map<Integer, ItemStack> getContent(Player player) {
         Map<Integer, ItemStack> map = new HashMap<>();
+
+        ItemStack switchItem = new SwitchItem().build();
+        ItemStack backItem = new BackItem().build();
+        ItemStack settingsItem = new SettingsItem().build();
+        ItemStack confirmationItem = new ConfirmationItem().build();
+        ItemStack createTeamItem = new CreateTeamItem().build();
+        ItemStack listTeamsItem = new ListTeamsItem().build();
+        ItemStack restartItem = new RestartItem().build();
 
         switch (this) {
             case MAIN:
+                map.put(11, createTeamItem);
+                if (MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.END)) {
+                    map.put(12, listTeamsItem);
+                    map.put(14, restartItem);
+                } else {
+                    map.put(13, listTeamsItem);
+                }
                 break;
             case SWITCH:
                 for (int i = 10; i <= 13; i++) {
-                    map.put(i, new SwitchItem().build());
+                    map.put(i, switchItem);
                 }
                 if (player.isOp()) {
-
+                    map.put(15, settingsItem);
                 } else {
-                    map.put(14, new SwitchItem().build());
+                    map.put(14, switchItem);
                 }
                 break;
             case LIST:
+                for (VaroTeam varoTeam : MiniVaro.getInstance().getTeamManager().getTeams()) {
+
+                }
                 break;
             case CREATE:
                 break;
-            case REMOVE:
+            case INFO:
                 break;
             case RESTART:
                 break;
+            case CONFIRM:
+                map.put(11, confirmationItem);
+                map.put(14, backItem);
+                break;
         }
-
+        map.put(16, backItem);
         return map;
     }
 }

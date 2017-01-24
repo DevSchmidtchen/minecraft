@@ -1,10 +1,12 @@
 package me.schmidtchen.minivaro.manager;
 
 import me.schmidtchen.minivaro.MiniVaro;
+import me.schmidtchen.minivaro.utils.VaroPlayer;
 import me.schmidtchen.minivaro.utils.VaroTeam;
 import org.bukkit.Color;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,7 +15,7 @@ import java.util.UUID;
  */
 public class TeamManager {
 
-    public boolean addTeam (Color color, String name, List<UUID> members) {
+    public boolean addTeam (Color color, String name, List<VaroPlayer> members) {
         if (!checkExistence(name)) {
             VaroTeam team = new VaroTeam(color, name, members);
             team.addToConfig();
@@ -51,6 +53,16 @@ public class TeamManager {
             }
         }
         return false;
+    }
+
+    public List<VaroTeam> getLivingTeams() {
+        List<VaroTeam> livingTeams = new ArrayList<>();
+        for (VaroTeam varoTeam : getTeams()) {
+            if (varoTeam.getMembers().stream().filter(varoPlayer -> !varoPlayer.isDead()).count() > 0) {
+                livingTeams.add(varoTeam);
+            }
+        }
+        return livingTeams;
     }
 
 }

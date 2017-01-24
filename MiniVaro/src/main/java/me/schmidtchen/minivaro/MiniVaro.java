@@ -11,6 +11,7 @@ import me.schmidtchen.minivaro.listeners.ServerListener;
 import me.schmidtchen.minivaro.manager.MenuManager;
 import me.schmidtchen.minivaro.manager.TeamManager;
 import me.schmidtchen.minivaro.manager.WorldManager;
+import me.schmidtchen.minivaro.utils.Varo;
 import net.cubespace.Yamler.Config.InvalidConfigurationException;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,6 +37,8 @@ public class MiniVaro extends JavaPlugin {
     public MainConfig mainConfig;
     public TeamConfig teamConfig;
 
+    public Varo varo;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -56,6 +59,8 @@ public class MiniVaro extends JavaPlugin {
         worldManager = new WorldManager();
         teamManager = new TeamManager();
         menuManager = new MenuManager();
+
+        varo = new Varo();
 
         System.out.println("[VaroBuild] Plugin started!");
     }

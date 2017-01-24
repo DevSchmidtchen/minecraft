@@ -18,7 +18,7 @@ import java.util.UUID;
 @Getter
 public class VaroTeam {
 
-    public VaroTeam(Color color, String name, List<UUID> members) {
+    public VaroTeam(Color color, String name, List<VaroPlayer> members) {
         this.color = color;
         this.name = name;
         this.members = members;
@@ -26,7 +26,7 @@ public class VaroTeam {
 
     public Color color;
     public String name;
-    public List<UUID> members;
+    public List<VaroPlayer> members;
     public Location teamChest;
 
     public void changeColor (Color color) {
@@ -39,13 +39,15 @@ public class VaroTeam {
 
     public void addMember (Player player) {
         if (members.size() <= 2) {
-            members.add(player.getUniqueId());
+            members.add(new VaroPlayer(player.getUniqueId()));
         }
     }
 
     public void removeMember (Player player) {
-        if (members.contains(player.getUniqueId())) {
-            members.remove(player.getUniqueId());
+        for (VaroPlayer varoPlayer : members) {
+            if (varoPlayer.getUuid() == player.getUniqueId()) {
+                members.remove(varoPlayer);
+            }
         }
     }
 
