@@ -17,7 +17,7 @@ public enum Menu {
 
     MAIN("Hauptmenü", 27),
     SWITCH("Spielmodus wechseln", 27),
-    CREATE("Team erstellen", 27),
+    COLOR("Farbe einstellen", 27),
     LIST("Teamliste", 27),
     INFO("Teaminformationen", 27),
     RESTART("Varo neustarten", 27),
@@ -42,6 +42,8 @@ public enum Menu {
         ItemStack listTeamsItem = new ListTeamsItem().build();
         ItemStack restartItem = new RestartItem().build();
 
+        int inventoryStart = 10;
+
         switch (this) {
             case MAIN:
                 map.put(11, createTeamItem);
@@ -64,21 +66,23 @@ public enum Menu {
                 break;
             case LIST:
                 for (VaroTeam varoTeam : MiniVaro.getInstance().getTeamManager().getTeams()) {
-
+                    map.put(inventoryStart, new TeamItem(varoTeam.getColor(), varoTeam.getName()).build());
+                    inventoryStart++;
                 }
+                inventoryStart = 10;
                 break;
-            case CREATE:
-                break;
-            case INFO:
-                break;
-            case RESTART:
+            case COLOR:
+
+
                 break;
             case CONFIRM:
                 map.put(11, confirmationItem);
                 map.put(14, backItem);
                 break;
         }
-        map.put(16, backItem);
+        if (!this.equals(COLOR)) {
+            map.put(16, backItem);
+        }
         return map;
     }
 }

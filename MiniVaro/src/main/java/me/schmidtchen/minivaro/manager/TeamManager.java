@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by Matti on 06.01.17.
@@ -65,4 +64,8 @@ public class TeamManager {
         return livingTeams;
     }
 
+    public void removeTeam(String name) {
+        VaroTeam varoTeam = getTeamByName(name);
+        varoTeam.removeFromConfig();
+    }
 }

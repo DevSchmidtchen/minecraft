@@ -2,10 +2,9 @@ package me.schmidtchen.minivaro.manager;
 
 import lombok.Getter;
 import me.schmidtchen.minivaro.MiniVaro;
-import me.schmidtchen.minivaro.items.ConfirmationItem;
-import me.schmidtchen.minivaro.utils.Callback;
 import me.schmidtchen.minivaro.utils.Menu;
 import me.schmidtchen.minivaro.utils.MenuItem;
+import me.schmidtchen.minivaro.utils.VaroTeam;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -28,7 +27,10 @@ public class MenuManager {
 
     public Map<Player, Consumer<Player>> waiters;
 
+    public Map<Player, VaroTeam> cachedVaroTeams;
+
     public MenuManager() {
+        cachedVaroTeams = new HashMap<>();
         current = new HashMap<>();
         waiters = new HashMap<>();
         inventoryPrefix = "§8>> §6VaroBuild §7- §e";
@@ -39,15 +41,17 @@ public class MenuManager {
     }
 
     public void createNewTeam(Player player) {
-
+        VaroTeam varoTeam = new VaroTeam();
+        cachedVaroTeams.put(player, varoTeam);
+        varoTeam.requestName(player);
     }
 
     public void listTeams(Player player) {
-
+        openMenu(player, Menu.LIST);
     }
 
     public void removeTeam(String name) {
-
+        MiniVaro.getInstance().getTeamManager().removeTeam(name);
     }
 
     public void restartVaro() {
