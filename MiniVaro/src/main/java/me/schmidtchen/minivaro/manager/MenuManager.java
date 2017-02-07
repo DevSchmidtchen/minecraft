@@ -59,7 +59,7 @@ public class MenuManager {
     }
 
     public void switchGametype(Player player) {
-
+        MiniVaro.getInstance().getWorldManager().switchWorld(player);
     }
 
     public void waitForConfirmation(Player player, Consumer<Player> callback) {

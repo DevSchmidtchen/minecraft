@@ -2,7 +2,6 @@ package me.schmidtchen.minivaro.utils;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -15,9 +14,15 @@ public class VaroPlayer {
 
     public UUID uuid;
     public boolean dead = false;
+    public int kills = 0;
 
     public VaroPlayer (UUID uuid) {
         this.uuid = uuid;
     }
 
+    public void addKill() {
+
+        kills++;
+
+    }
 }

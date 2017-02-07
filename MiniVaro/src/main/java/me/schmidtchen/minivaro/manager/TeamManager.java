@@ -36,6 +36,13 @@ public class TeamManager {
         return null;
     }
 
+    public VaroPlayer getVaroPlayer(Player player) {
+        for (VaroTeam varoTeam : getTeams()) {
+            varoTeam.getMembers().stream().filter((varoPlayer) -> varoPlayer.getUuid().equals(player.getUniqueId())).findFirst().orElse(null);
+        }
+        return null;
+    }
+
     public boolean hasTeam(Player player) {
         for (VaroTeam varoTeam : getTeams()) {
             if (varoTeam.getMembers().contains(player.getUniqueId())) {

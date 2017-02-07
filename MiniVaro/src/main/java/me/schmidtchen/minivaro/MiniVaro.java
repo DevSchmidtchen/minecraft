@@ -5,9 +5,7 @@ import lombok.Setter;
 import me.schmidtchen.minivaro.commands.VaroCommand;
 import me.schmidtchen.minivaro.configs.MainConfig;
 import me.schmidtchen.minivaro.configs.TeamConfig;
-import me.schmidtchen.minivaro.listeners.MenuListener;
-import me.schmidtchen.minivaro.listeners.PlayerDeathListener;
-import me.schmidtchen.minivaro.listeners.ServerListener;
+import me.schmidtchen.minivaro.listeners.*;
 import me.schmidtchen.minivaro.manager.MenuManager;
 import me.schmidtchen.minivaro.manager.TeamManager;
 import me.schmidtchen.minivaro.manager.WorldManager;
@@ -71,6 +69,9 @@ public class MiniVaro extends JavaPlugin {
         pluginManager.registerEvents(new ServerListener(), this);
         pluginManager.registerEvents(new PlayerDeathListener(), this);
         pluginManager.registerEvents(new MenuListener(), this);
+        pluginManager.registerEvents(new PlayerInteractListener(), this);
+        pluginManager.registerEvents(new SignEditListener(), this);
+        pluginManager.registerEvents(new ChatListener(), this);
     }
 
     private void registerCommands() {

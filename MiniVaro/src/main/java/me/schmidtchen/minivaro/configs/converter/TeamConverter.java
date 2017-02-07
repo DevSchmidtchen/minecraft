@@ -8,7 +8,9 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Matti on 06.01.17.
@@ -38,7 +40,7 @@ public class TeamConverter implements Converter{
         }
 
         VaroTeam varoTeam = new VaroTeam(Color.deserialize((Map<String, Object>) info.get("color")), (String) info.get("name"), (List<VaroPlayer>) info.get("members"));
-        varoTeam.setTeamchest((Location) info.get("teamchest"));
+        varoTeam.setTeamchest(((Location[]) info.get("teamchest")));
 
         return varoTeam;
     }
