@@ -7,7 +7,10 @@ import net.cubespace.Yamler.Config.InvalidConfigurationException;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ public class VaroTeam {
     public String name;
     public List<VaroPlayer> members = new ArrayList<>();
     public Location[] teamChest;
+    public ItemStack anvilNametag;
 
     public VaroTeam(Color color, String name, List<VaroPlayer> members) {
         this.color = color;
@@ -47,6 +51,13 @@ public class VaroTeam {
                 }
             }
         });
+
+        this.anvilNametag = new ItemStack(Material.NAME_TAG);
+        ItemMeta nametagMeta = anvilNametag.getItemMeta();
+        nametagMeta.setDisplayName(" ");
+        anvilNametag.setItemMeta(nametagMeta);
+
+        anvilGUI.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, anvilNametag);
         anvilGUI.open();
     }
 
@@ -71,6 +82,7 @@ public class VaroTeam {
                     }
                 }
             });
+            anvilGUI.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, anvilNametag);
             anvilGUI.open();
         }
     }
@@ -85,18 +97,22 @@ public class VaroTeam {
 
     public void addMember (String name) {
         if (members.size() < 2) {
-            UUIDFetcher.getUUID(name, new Consumer<UUID>() {
-                @Override
-                public void accept(UUID uuid) {
-                    members.add(new VaroPlayer(uuid));
-                }
-            });
+            if (Bukkit.getPlayer(name) != null) {
+                members.add(new VaroPlayer(Bukkit.getPlayer(name).getUniqueId().toString()));
+            } else {
+                UUIDFetcher.getUUID(name, new Consumer<UUID>() {
+                    @Override
+                    public void accept(UUID uuid) {
+                        members.add(new VaroPlayer(uuid.toString()));
+                    }
+                });
+            }
         }
     }
 
     public void removeMember (Player player) {
         for (VaroPlayer varoPlayer : members) {
-            if (varoPlayer.getUuid() == player.getUniqueId()) {
+            if (varoPlayer.getUuid().equals(player.getUniqueId().toString())) {
                 members.remove(varoPlayer);
             }
         }

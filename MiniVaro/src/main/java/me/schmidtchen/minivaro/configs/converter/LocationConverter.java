@@ -1,7 +1,9 @@
 package me.schmidtchen.minivaro.configs.converter;
 
+import lombok.NoArgsConstructor;
 import net.cubespace.Yamler.Config.ConfigSection;
 import net.cubespace.Yamler.Config.Converter.Converter;
+import net.cubespace.Yamler.Config.InternalConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -12,7 +14,12 @@ import java.util.Map;
 /**
  * Created by Matti on 19.01.17.
  */
+@NoArgsConstructor
 public class LocationConverter implements Converter {
+
+    public LocationConverter(InternalConverter converter) {
+    }
+
     @Override
     public Object toConfig(Class<?> aClass, Object o, ParameterizedType parameterizedType) throws Exception {
         Location location = (Location) o;

@@ -5,11 +5,11 @@ import me.schmidtchen.minivaro.MiniVaro;
 import me.schmidtchen.minivaro.utils.Menu;
 import me.schmidtchen.minivaro.utils.MenuItem;
 import me.schmidtchen.minivaro.utils.VaroTeam;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,9 +31,10 @@ public class MenuManager {
 
     public MenuManager() {
         cachedVaroTeams = new HashMap<>();
+        menuItems = new ArrayList<>();
         current = new HashMap<>();
         waiters = new HashMap<>();
-        inventoryPrefix = "§8>> §6VaroBuild §7- §e";
+        inventoryPrefix = "§6Varo §7- §e";
     }
 
     public void openVaroInventory(Player player) {
@@ -69,11 +70,16 @@ public class MenuManager {
 
     public void openMenu(Player player, Menu menu) {
         current.put(player, menu);
-        Inventory inventory = Bukkit.getServer().createInventory(null, menu.getSize(), inventoryPrefix + menu.getName());
+        Inventory inventory = MiniVaro.getInstance().getServer().createInventory(null, menu.getSize(), inventoryPrefix + menu.getName());
         for (Map.Entry<Integer, ItemStack> entry : menu.getContent(player).entrySet()) {
             inventory.setItem(entry.getKey(), entry.getValue());
         }
-        player.openInventory(inventory);
+        MiniVaro.getInstance().getServer().getScheduler().runTask(MiniVaro.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                player.openInventory(inventory);
+            }
+        });
     }
 
 }

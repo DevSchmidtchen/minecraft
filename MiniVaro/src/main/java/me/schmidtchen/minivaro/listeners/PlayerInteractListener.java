@@ -20,7 +20,7 @@ public class PlayerInteractListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if (MiniVaro.getInstance().getWorldManager().isInVaro(player) && event.hasBlock() && event.getClickedBlock().getType().equals(Material.CHEST)) {
+        if (MiniVaro.getInstance().getWorldManager().getInVaro().contains(player) && event.hasBlock() && event.getClickedBlock().getType().equals(Material.CHEST)) {
             Block chest = event.getClickedBlock();
             for (VaroTeam varoTeam : MiniVaro.getInstance().getTeamManager().getTeams()) {
                 if (Arrays.stream(varoTeam.getTeamChest()).anyMatch(location -> location == chest.getLocation())) {

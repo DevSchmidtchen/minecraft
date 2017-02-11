@@ -1,6 +1,7 @@
 package me.schmidtchen.minivaro.utils;
 
 import lombok.Getter;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -39,7 +40,7 @@ public class ItemBuilder {
 
     public ItemBuilder setLore(String ... lore) {
         for (String line : lore) {
-            this.lore.add(Color.GRAY + line);
+            this.lore.add(ChatColor.GRAY + line);
         }
         return this;
     }

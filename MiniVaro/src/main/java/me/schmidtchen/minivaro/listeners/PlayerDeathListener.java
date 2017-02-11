@@ -18,7 +18,7 @@ public class PlayerDeathListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
 
-        if (MiniVaro.getInstance().getWorldManager().isInVaro(player)) {
+        if (MiniVaro.getInstance().getWorldManager().getInVaro().contains(player)) {
             MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).setDead(true);
             player.sendMessage(MiniVaro.getInstance().getPrefix() + "§cDu bist aus Varo ausgeschieden!");
             if (player.getKiller() != null) {

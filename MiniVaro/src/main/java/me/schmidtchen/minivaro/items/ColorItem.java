@@ -17,7 +17,7 @@ public class ColorItem extends MenuItem {
 
     public ColorItem(Color color) {
         super(Material.LEATHER_CHESTPLATE);
-        super.setDisplayName("§8>> " + color + color.toString());
+        super.setDisplayName("§8>> " + MiniVaro.getInstance().getChatColor(color) + MiniVaro.getInstance().getChatColor(color).name());
 
         LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) super.build().getItemMeta();
         leatherArmorMeta.setColor(color);

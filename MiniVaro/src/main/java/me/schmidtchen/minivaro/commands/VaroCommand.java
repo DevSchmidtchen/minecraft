@@ -19,6 +19,9 @@ public class VaroCommand implements CommandExecutor {
             } else {
                 commandSender.sendMessage("[VaroBuild] Nur Spieler können diesen Command ausführen!");
             }
+        } else {
+            if (commandSender instanceof Player) commandSender.sendMessage(MiniVaro.getInstance().getPrefix() + "/varo");
+            else commandSender.sendMessage("[VaroBuild] Nur Spieler können diesen Command ausführen!");
         }
         return true;
     }

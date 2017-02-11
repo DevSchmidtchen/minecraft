@@ -18,7 +18,7 @@ public class TeamItem extends MenuItem {
 
     public TeamItem(Color color, String name) {
         super(Material.LEATHER_HELMET);
-        super.setDisplayName("§8>> " + color + name + " löschen");
+        super.setDisplayName("§8>> " + MiniVaro.getInstance().getChatColor(color) + name + " §4löschen");
 
         LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) super.build().getItemMeta();
         leatherArmorMeta.setColor(color);

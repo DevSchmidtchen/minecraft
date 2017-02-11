@@ -11,7 +11,7 @@ public abstract class MenuItem extends ItemBuilder {
 
     public MenuItem(Material material) {
         super(material);
-        MiniVaro.getInstance().getMenuManager().menuItems.add(this);
+        MiniVaro.getInstance().getMenuManager().getMenuItems().add(this);
     }
 
     public abstract void onClick(Player player);

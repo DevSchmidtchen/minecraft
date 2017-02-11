@@ -46,7 +46,10 @@ public class UUIDFetcher {
 
             JsonObject obj = new JsonParser().parse(new BufferedReader(new InputStreamReader(connection.getInputStream()))).getAsJsonObject();
 
-            return UUID.fromString(obj.get("id").getAsString());
+            String id = obj.get("id").getAsString();
+            UUID uuid = UUID.fromString(id.substring(0, 8) + "-" + id.substring(8, 12) + "-" + id.substring(12, 16) + "-" + id.substring(16, 20) + "-" + id.substring(20, 32));
+
+            return uuid;
         } catch (Exception e) {
             e.printStackTrace();
         }

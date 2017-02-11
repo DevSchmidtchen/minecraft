@@ -15,15 +15,15 @@ import java.util.List;
 @Setter
 public class WorldManager {
 
-    public List<Player> isInVaro = new ArrayList<>();
+    public List<Player> inVaro = new ArrayList<>();
 
     public void switchWorld(Player player) {
-        if (isInVaro.contains(player)) {
+        if (inVaro.contains(player)) {
             player.teleport(MiniVaro.getInstance().getServer().getWorld("world").getSpawnLocation());
-            isInVaro.remove(player);
+            inVaro.remove(player);
         } else {
             player.teleport(MiniVaro.getInstance().getServer().getWorld("varo").getSpawnLocation());
-            isInVaro.add(player);
+            inVaro.add(player);
         }
     }
 

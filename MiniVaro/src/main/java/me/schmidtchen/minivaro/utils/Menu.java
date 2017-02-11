@@ -3,6 +3,7 @@ package me.schmidtchen.minivaro.utils;
 import lombok.Getter;
 import me.schmidtchen.minivaro.MiniVaro;
 import me.schmidtchen.minivaro.items.*;
+import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,8 +17,8 @@ import java.util.Map;
 public enum Menu {
 
     MAIN("Hauptmenü", 27),
-    SWITCH("Spielmodus wechseln", 27),
-    COLOR("Farbe einstellen", 27),
+    SWITCH("Modus wechseln", 27),
+    COLOR("Farbe", 27),
     LIST("Teamliste", 27),
     INFO("Teaminformationen", 27),
     RESTART("Varo neustarten", 27),
@@ -72,8 +73,13 @@ public enum Menu {
                 inventoryStart = 10;
                 break;
             case COLOR:
-
-
+                map.put(10, new ColorItem(Color.BLUE).build());
+                map.put(11, new ColorItem(Color.GREEN).build());
+                map.put(12, new ColorItem(Color.BLACK).build());
+                map.put(13, new ColorItem(Color.PURPLE).build());
+                map.put(14, new ColorItem(Color.WHITE).build());
+                map.put(15, new ColorItem(Color.YELLOW).build());
+                map.put(16, new ColorItem(Color.LIME).build());
                 break;
             case CONFIRM:
                 map.put(11, confirmationItem);

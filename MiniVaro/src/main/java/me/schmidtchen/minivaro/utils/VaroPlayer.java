@@ -3,8 +3,6 @@ package me.schmidtchen.minivaro.utils;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
-
 /**
  * Created by Matti on 24.01.17.
  */
@@ -12,11 +10,11 @@ import java.util.UUID;
 @Setter
 public class VaroPlayer {
 
-    public UUID uuid;
+    public String uuid;
     public boolean dead = false;
     public int kills = 0;
 
-    public VaroPlayer (UUID uuid) {
+    public VaroPlayer (String uuid) {
         this.uuid = uuid;
     }
 

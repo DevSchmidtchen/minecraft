@@ -23,6 +23,7 @@ public class MenuListener implements Listener {
         if (MiniVaro.getInstance().getMenuManager().getCurrent().containsKey(player)) {
             for (MenuItem menuItem : MiniVaro.getInstance().getMenuManager().getMenuItems()) {
                 if (event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().hasDisplayName() && menuItem.getDisplayName().equals(event.getCurrentItem().getItemMeta().getDisplayName())) {
+                    event.setCancelled(true);
                     menuItem.onClick(player);
                     return;
                 }

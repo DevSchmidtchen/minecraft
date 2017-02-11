@@ -41,8 +41,8 @@ public class ServerListener implements Listener {
         event.setJoinMessage(MiniVaro.getInstance().getPrefix() + "[§2+§7] " + player.getDisplayName() + " §7» §c" + MiniVaro.getInstance().getServer().getOnlinePlayers().size() + "§6/" + MiniVaro.getInstance().getServer().getMaxPlayers());
 
         MainConfig mainConfig = MiniVaro.getInstance().getMainConfig();
-        if (!mainConfig.getPlayers().containsKey(player.getUniqueId()) || !mainConfig.getPlayers().get(player.getUniqueId()).equals(player.getName())) {
-            mainConfig.getPlayers().put(player.getUniqueId(), player.getName());
+        if (!mainConfig.getPlayers().containsKey(player.getUniqueId().toString()) || !mainConfig.getPlayers().get(player.getUniqueId().toString()).equals(player.getName())) {
+            mainConfig.getPlayers().put(player.getUniqueId().toString(), player.getName());
             try {
                 mainConfig.save();
             } catch (InvalidConfigurationException e) {
@@ -56,6 +56,7 @@ public class ServerListener implements Listener {
         Player player = event.getPlayer();
 
         event.setQuitMessage(MiniVaro.getInstance().getPrefix() + "[§4-§7] " + player.getDisplayName() + " §7» §c" + MiniVaro.getInstance().getServer().getOnlinePlayers().size() + "§6/" + MiniVaro.getInstance().getServer().getMaxPlayers());
+        MiniVaro.getInstance().getMenuManager().getCurrent().remove(player);
     }
 
 }

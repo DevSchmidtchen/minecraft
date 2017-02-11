@@ -2,12 +2,11 @@ package me.schmidtchen.minivaro.configs;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.cubespace.Yamler.Config.Config;
+import net.cubespace.Yamler.Config.YamlConfig;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Created by Matti on 06.01.17.
@@ -15,9 +14,9 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class MainConfig extends Config {
+public class MainConfig extends YamlConfig {
 
-    Map<UUID, String> players = new HashMap<>();
+    private Map<String, String> players = new HashMap<>();
 
     public MainConfig (File file) {
         CONFIG_FILE = file;
