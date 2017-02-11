@@ -20,8 +20,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class TeamConverter implements Converter{
 
-    public TeamConverter(InternalConverter converter) {
-    }
+    public TeamConverter(InternalConverter converter) { }
 
     @Override
     public Object toConfig(Class<?> aClass, Object o, ParameterizedType parameterizedType) throws Exception {

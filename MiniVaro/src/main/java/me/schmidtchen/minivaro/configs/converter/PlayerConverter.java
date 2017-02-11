@@ -16,8 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class PlayerConverter implements Converter{
 
-    public PlayerConverter(InternalConverter converter) {
-    }
+    public PlayerConverter(InternalConverter converter) { }
 
     @Override
     public Object toConfig(Class<?> aClass, Object o, ParameterizedType parameterizedType) throws Exception {
@@ -26,6 +25,7 @@ public class PlayerConverter implements Converter{
         Map<String, Object> info = new HashMap<>();
         info.put("uuid", varoPlayer.getUuid());
         info.put("dead", varoPlayer.isDead());
+        info.put("kills", varoPlayer.getKills());
 
         return info;
     }
@@ -42,6 +42,7 @@ public class PlayerConverter implements Converter{
 
         VaroPlayer varoPlayer = new VaroPlayer((String) info.get("uuid"));
         varoPlayer.setDead((boolean) info.get("dead"));
+        varoPlayer.setKills((int) info.get("kills"));
 
         return varoPlayer;
     }

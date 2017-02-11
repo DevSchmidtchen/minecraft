@@ -36,16 +36,26 @@ public class TeamManager {
         return null;
     }
 
+    public VaroTeam getTeamByPlayer(VaroPlayer varoPlayer) {
+        for (VaroTeam varoTeam : getTeams()) {
+            if (varoTeam.getMembers().contains(varoPlayer)) {
+                return varoTeam;
+            }
+        }
+        return null;
+    }
+
     public VaroPlayer getVaroPlayer(Player player) {
         for (VaroTeam varoTeam : getTeams()) {
-            varoTeam.getMembers().stream().filter((varoPlayer) -> varoPlayer.getUuid().equals(player.getUniqueId())).findFirst().orElse(null);
+            return varoTeam.getMembers().stream().filter((varoPlayer) -> varoPlayer.getUuid().equals(player.getUniqueId().toString())).findFirst().orElse(null);
         }
         return null;
     }
 
     public boolean hasTeam(Player player) {
+        VaroPlayer varoPlayer = getVaroPlayer(player);
         for (VaroTeam varoTeam : getTeams()) {
-            if (varoTeam.getMembers().contains(player.getUniqueId())) {
+            if (varoTeam.getMembers().contains(varoPlayer)) {
                 return true;
             }
         }

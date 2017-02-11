@@ -17,8 +17,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class LocationConverter implements Converter {
 
-    public LocationConverter(InternalConverter converter) {
-    }
+    public LocationConverter(InternalConverter converter) { }
 
     @Override
     public Object toConfig(Class<?> aClass, Object o, ParameterizedType parameterizedType) throws Exception {

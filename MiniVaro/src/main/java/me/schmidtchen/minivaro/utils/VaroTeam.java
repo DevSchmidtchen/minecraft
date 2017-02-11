@@ -28,7 +28,6 @@ public class VaroTeam {
     public String name;
     public List<VaroPlayer> members = new ArrayList<>();
     public Location[] teamChest;
-    public ItemStack anvilNametag;
 
     public VaroTeam(Color color, String name, List<VaroPlayer> members) {
         this.color = color;
@@ -52,37 +51,45 @@ public class VaroTeam {
             }
         });
 
-        this.anvilNametag = new ItemStack(Material.NAME_TAG);
-        ItemMeta nametagMeta = anvilNametag.getItemMeta();
-        nametagMeta.setDisplayName(" ");
-        anvilNametag.setItemMeta(nametagMeta);
+        ItemStack itemStack = new ItemStack(Material.NAME_TAG);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName("Teamname");
+        itemStack.setItemMeta(itemMeta);
 
-        anvilGUI.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, anvilNametag);
+        anvilGUI.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, itemStack);
         anvilGUI.open();
     }
 
-    public void requestMember(Player player) {
-        if (this.getMembers().isEmpty() || this.getMembers().size() == 1) {
+    public void requestMembers(Player player) {
+        if (this.getMembers().size() < 2) {
             AnvilGUI anvilGUI = new AnvilGUI(player, new AnvilGUI.AnvilClickEventHandler() {
                 public void onAnvilClick(AnvilGUI.AnvilClickEvent event) {
                     if (event.getSlot().equals(AnvilGUI.AnvilSlot.OUTPUT)) {
                         event.setWillClose(true);
                         event.setWillDestroy(true);
-                        addMember(event.getName());
-                        System.out.println("[VaroBuild] Spielername: " + event.getName());
-                        if (getMembers().size() == 2) {
-                            player.sendMessage(MiniVaro.getInstance().getPrefix() + "Team hinzugefügt!");
-                            getTeam().addToConfig();
-                        } else {
-                            requestMember(player);
-                        }
+                        addMember(event.getName(), name -> {
+                            System.out.println("[VaroBuild] Spielername: " + name);
+                            if (getMembers().size() == 2) {
+                                player.sendMessage(MiniVaro.getInstance().getPrefix() + "Team hinzugefügt!");
+                                getTeam().addToConfig();
+                            } else {
+                                requestMembers(player);
+                            }
+                        });
+
                     } else {
                         event.setWillClose(false);
                         event.setWillDestroy(false);
                     }
                 }
             });
-            anvilGUI.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, anvilNametag);
+
+            ItemStack itemStack = new ItemStack(Material.NAME_TAG);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            itemMeta.setDisplayName("Spielername");
+            itemStack.setItemMeta(itemMeta);
+
+            anvilGUI.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, itemStack);
             anvilGUI.open();
         }
     }
@@ -95,15 +102,19 @@ public class VaroTeam {
         this.name = name;
     }
 
-    public void addMember (String name) {
+    public void addMember (String name, Consumer<String> callback) {
         if (members.size() < 2) {
             if (Bukkit.getPlayer(name) != null) {
-                members.add(new VaroPlayer(Bukkit.getPlayer(name).getUniqueId().toString()));
+                Player player = Bukkit.getPlayer(name);
+                members.add(new VaroPlayer(player.getUniqueId().toString()));
+                player.setDisplayName(MiniVaro.getInstance().getChatColor(color) + player.getName());
+                callback.accept(name);
             } else {
                 UUIDFetcher.getUUID(name, new Consumer<UUID>() {
                     @Override
                     public void accept(UUID uuid) {
                         members.add(new VaroPlayer(uuid.toString()));
+                        callback.accept(name);
                     }
                 });
             }

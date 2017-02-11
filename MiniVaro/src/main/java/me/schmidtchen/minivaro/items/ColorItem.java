@@ -29,6 +29,6 @@ public class ColorItem extends MenuItem {
     public void onClick(Player player) {
         VaroTeam varoTeam = MiniVaro.getInstance().getMenuManager().getCachedVaroTeams().get(player);
         varoTeam.setColor(color);
-        varoTeam.requestMember(player);
+        varoTeam.requestMembers(player);
     }
 }

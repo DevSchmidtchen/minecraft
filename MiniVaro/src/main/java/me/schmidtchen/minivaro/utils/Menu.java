@@ -82,8 +82,9 @@ public enum Menu {
                 map.put(16, new ColorItem(Color.LIME).build());
                 break;
             case CONFIRM:
-                map.put(11, confirmationItem);
-                map.put(14, backItem);
+                for (int i = 10; i <= 14; i++) {
+                    map.put(i, confirmationItem);
+                }
                 break;
         }
         if (!this.equals(COLOR)) {

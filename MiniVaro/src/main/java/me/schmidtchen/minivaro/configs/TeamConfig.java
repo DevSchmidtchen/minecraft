@@ -24,8 +24,8 @@ public class TeamConfig extends YamlConfig {
     public TeamConfig(File file) {
         CONFIG_FILE = file;
         try {
-            addConverter(TeamConverter.class);
             addConverter(LocationConverter.class);
+            addConverter(TeamConverter.class);
         } catch (InvalidConverterException exception) {
             exception.printStackTrace();
         }
