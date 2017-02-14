@@ -7,9 +7,11 @@ import me.schmidtchen.minivaro.configs.MainConfig;
 import me.schmidtchen.minivaro.configs.TeamConfig;
 import me.schmidtchen.minivaro.listeners.*;
 import me.schmidtchen.minivaro.manager.MenuManager;
+import me.schmidtchen.minivaro.manager.ScoreboardManager;
 import me.schmidtchen.minivaro.manager.TeamManager;
 import me.schmidtchen.minivaro.manager.WorldManager;
 import me.schmidtchen.minivaro.utils.Varo;
+import me.schmidtchen.minivaro.utils.VaroState;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.plugin.PluginManager;
@@ -30,6 +32,7 @@ public class MiniVaro extends JavaPlugin {
     public WorldManager worldManager;
     public TeamManager teamManager;
     public MenuManager menuManager;
+    public ScoreboardManager scoreboardManager;
 
     public String prefix = "§6VaroBuild §8» §7";
 
@@ -57,12 +60,13 @@ public class MiniVaro extends JavaPlugin {
         registerEvents();
         registerCommands();
 
+        scoreboardManager = new ScoreboardManager();
         worldManager = new WorldManager();
         teamManager = new TeamManager();
         menuManager = new MenuManager();
 
         varo = new Varo();
-        varo.start();
+        varo.setVaroState(VaroState.STARTING);
 
         System.out.println("[VaroBuild] Plugin started!");
     }

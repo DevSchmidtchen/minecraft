@@ -25,7 +25,7 @@ public class RestartItem extends MenuItem {
             @Override
             public void accept(Player player) {
                 player.closeInventory();
-                MiniVaro.getInstance().getMenuManager().restartVaro();
+                MiniVaro.getInstance().getVaro().restart();
             }
         });
     }

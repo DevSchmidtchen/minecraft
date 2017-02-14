@@ -48,7 +48,10 @@ public enum Menu {
         switch (this) {
             case MAIN:
                 map.put(11, createTeamItem);
-                if (MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.END)) {
+                if (MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.END) || MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.RUNNING)) {
+                    map.put(12, listTeamsItem);
+                    map.put(14, restartItem);
+                } else if (MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.STARTING)) {
                     map.put(12, listTeamsItem);
                     map.put(14, restartItem);
                 } else {

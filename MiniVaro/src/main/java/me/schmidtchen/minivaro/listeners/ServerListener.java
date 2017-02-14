@@ -39,9 +39,12 @@ public class ServerListener implements Listener {
         Player player = event.getPlayer();
 
         if (MiniVaro.getInstance().getTeamManager().hasTeam(player)) {
+            System.out.println("[VaroBuild] Player has team!");
             player.setDisplayName(MiniVaro.getInstance().getChatColor(MiniVaro.getInstance().getTeamManager().getTeamByPlayer(MiniVaro.getInstance().getTeamManager().getVaroPlayer(player)).getColor()) + player.getName());
         }
         event.setJoinMessage(MiniVaro.getInstance().getPrefix() + "[§2+§7] " + player.getDisplayName() + " §7» §c" + MiniVaro.getInstance().getServer().getOnlinePlayers().size() + "§6/" + MiniVaro.getInstance().getServer().getMaxPlayers());
+
+        MiniVaro.getInstance().getScoreboardManager().setScoreboard(player);
 
         MainConfig mainConfig = MiniVaro.getInstance().getMainConfig();
         if (!mainConfig.getPlayers().containsKey(player.getUniqueId().toString()) || !mainConfig.getPlayers().get(player.getUniqueId().toString()).equals(player.getName())) {

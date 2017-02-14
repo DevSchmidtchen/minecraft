@@ -17,6 +17,7 @@ import java.util.Map;
 public class MainConfig extends YamlConfig {
 
     private Map<String, String> players = new HashMap<>();
+    private String varoState = "STARTING";
 
     public MainConfig (File file) {
         CONFIG_FILE = file;

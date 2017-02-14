@@ -76,7 +76,6 @@ public class VaroTeam {
                                 requestMembers(player);
                             }
                         });
-
                     } else {
                         event.setWillClose(false);
                         event.setWillDestroy(false);
@@ -108,7 +107,12 @@ public class VaroTeam {
                 Player player = Bukkit.getPlayer(name);
                 members.add(new VaroPlayer(player.getUniqueId().toString()));
                 player.setDisplayName(MiniVaro.getInstance().getChatColor(color) + player.getName());
-                callback.accept(name);
+                MiniVaro.getInstance().getServer().getScheduler().runTaskAsynchronously(MiniVaro.getInstance(), new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.accept(name);
+                    }
+                });
             } else {
                 UUIDFetcher.getUUID(name, new Consumer<UUID>() {
                     @Override

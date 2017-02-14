@@ -55,10 +55,6 @@ public class MenuManager {
         MiniVaro.getInstance().getTeamManager().removeTeam(name);
     }
 
-    public void restartVaro() {
-        MiniVaro.getInstance().getVaro().restart();
-    }
-
     public void switchGametype(Player player) {
         MiniVaro.getInstance().getWorldManager().switchWorld(player);
     }
