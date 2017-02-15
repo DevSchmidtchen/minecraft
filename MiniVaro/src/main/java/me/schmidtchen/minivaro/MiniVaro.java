@@ -60,9 +60,9 @@ public class MiniVaro extends JavaPlugin {
         registerEvents();
         registerCommands();
 
+        teamManager = new TeamManager();
         scoreboardManager = new ScoreboardManager();
         worldManager = new WorldManager();
-        teamManager = new TeamManager();
         menuManager = new MenuManager();
 
         varo = new Varo();

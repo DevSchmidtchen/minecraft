@@ -42,6 +42,7 @@ public enum Menu {
         ItemStack createTeamItem = new CreateTeamItem().build();
         ItemStack listTeamsItem = new ListTeamsItem().build();
         ItemStack restartItem = new RestartItem().build();
+        ItemStack startItem = new StartItem().build();
 
         int inventoryStart = 10;
 
@@ -53,7 +54,7 @@ public enum Menu {
                     map.put(14, restartItem);
                 } else if (MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.STARTING)) {
                     map.put(12, listTeamsItem);
-                    map.put(14, restartItem);
+                    map.put(14, startItem);
                 } else {
                     map.put(13, listTeamsItem);
                 }

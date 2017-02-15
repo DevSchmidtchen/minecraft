@@ -32,6 +32,7 @@ public class TeamItem extends MenuItem {
             @Override
             public void accept(Player player) {
                 MiniVaro.getInstance().getMenuManager().removeTeam(name);
+                player.sendMessage(MiniVaro.getInstance().getPrefix() + "Team entfernt!");
             }
         });
     }

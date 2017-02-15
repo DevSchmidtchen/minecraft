@@ -18,7 +18,8 @@ public class ConfirmationItem extends MenuItem {
 
     @Override
     public void onClick(Player player) {
-        MiniVaro.getInstance().getMenuManager().getWaiters().get(player);
+        MiniVaro.getInstance().getMenuManager().getWaiters().get(player).accept(player);
+        player.closeInventory();
     }
 
 }

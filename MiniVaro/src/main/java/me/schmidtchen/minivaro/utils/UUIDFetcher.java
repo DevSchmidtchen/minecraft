@@ -1,6 +1,7 @@
 package me.schmidtchen.minivaro.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -44,7 +45,12 @@ public class UUIDFetcher {
             HttpURLConnection connection = (HttpURLConnection) new URL(String.format(UUID_URL, name)).openConnection();
             connection.setReadTimeout(5000);
 
-            JsonObject obj = new JsonParser().parse(new BufferedReader(new InputStreamReader(connection.getInputStream()))).getAsJsonObject();
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT) {
+                return null;
+            }
+
+            JsonElement element = new JsonParser().parse(new BufferedReader(new InputStreamReader(connection.getInputStream())));
+            JsonObject obj = element.getAsJsonObject();
 
             String id = obj.get("id").getAsString();
             UUID uuid = UUID.fromString(id.substring(0, 8) + "-" + id.substring(8, 12) + "-" + id.substring(12, 16) + "-" + id.substring(16, 20) + "-" + id.substring(20, 32));

@@ -16,7 +16,7 @@ public class RestartItem extends MenuItem {
         super(Material.STAINED_CLAY);
         super.setDisplayName("§8>> §4Varo neustarten")
                 .setData((short) 14)
-                .setLore("Hiermit kannst du", "Varo neustarten!", System.lineSeparator(), "Benutze es nur,", "wenn es wichtig ist!");
+                .setLore("Hiermit kannst du", "Varo neustarten!", "", "Benutze es nur,", "wenn es wichtig ist!");
     }
 
     @Override

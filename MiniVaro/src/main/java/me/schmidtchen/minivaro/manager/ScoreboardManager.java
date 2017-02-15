@@ -8,6 +8,7 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Matti on 06.01.17.
@@ -20,7 +21,14 @@ public class ScoreboardManager {
     public ScoreboardManager() {
         teams = new ArrayList<>();
         scoreboard = MiniVaro.getInstance().getServer().getScoreboardManager().getMainScoreboard();
-        for (VaroTeam varoTeam : MiniVaro.getInstance().getTeamManager().getTeams()) {
+        scoreboard.getTeams().forEach(Team::unregister);
+        updateTeams();
+    }
+
+    public void updateTeams() {
+        List<VaroTeam> varoTeams = MiniVaro.getInstance().getTeamManager().getTeams();
+        teams.clear();
+        for (VaroTeam varoTeam : varoTeams) {
             Team team = scoreboard.getTeam(varoTeam.getName()) != null ? scoreboard.getTeam(varoTeam.getName()) : scoreboard.registerNewTeam(varoTeam.getName());
             team.setPrefix(MiniVaro.getInstance().getChatColor(varoTeam.getColor()) + varoTeam.getName() + " §7| ");
             teams.add(team);
@@ -28,10 +36,22 @@ public class ScoreboardManager {
     }
 
     public void setScoreboard(Player player) {
+        Optional<Team> scoreboardTeam = teams.stream().filter(team -> team.hasEntry(player.getName())).findAny();
+        scoreboardTeam.ifPresent(team -> team.removeEntry(player.getName()));
+        scoreboardTeam.ifPresent(team -> System.out.println(team.getName()));
         if (MiniVaro.getInstance().getTeamManager().hasTeam(player)) {
-            teams.stream().filter(team -> team.hasEntry(player.getName())).findAny().get().removeEntry(player.getName());
             scoreboard.getTeam(MiniVaro.getInstance().getTeamManager().getTeamByPlayer(MiniVaro.getInstance().getTeamManager().getVaroPlayer(player)).getName()).addEntry(player.getName());
-            player.setScoreboard(scoreboard);
+        }
+        player.setScoreboard(scoreboard);
+    }
+
+    public void updateScoreboard() {
+        updateTeams();
+        for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
+            teams.stream().filter(team -> team.hasEntry(player.getName())).findAny().ifPresent(team -> team.removeEntry(player.getName()));
+            if (MiniVaro.getInstance().getTeamManager().hasTeam(player)) {
+                scoreboard.getTeam(MiniVaro.getInstance().getTeamManager().getTeamByPlayer(MiniVaro.getInstance().getTeamManager().getVaroPlayer(player)).getName()).addEntry(player.getName());
+            }
         }
     }
 }

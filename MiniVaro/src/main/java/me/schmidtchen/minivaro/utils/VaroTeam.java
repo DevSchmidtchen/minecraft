@@ -68,12 +68,18 @@ public class VaroTeam {
                         event.setWillClose(true);
                         event.setWillDestroy(true);
                         addMember(event.getName(), name -> {
-                            System.out.println("[VaroBuild] Spielername: " + name);
-                            if (getMembers().size() == 2) {
-                                player.sendMessage(MiniVaro.getInstance().getPrefix() + "Team hinzugefügt!");
-                                getTeam().addToConfig();
-                            } else {
+                            if (name == null) {
+                                player.sendMessage(MiniVaro.getInstance().getPrefix() + "§cDieser Spieler existiert nicht!");
                                 requestMembers(player);
+                            } else {
+                                System.out.println("[VaroBuild] Spielername: " + name);
+                                if (getMembers().size() == 2) {
+                                    player.sendMessage(MiniVaro.getInstance().getPrefix() + "Team hinzugefügt!");
+                                    getTeam().addToConfig();
+                                    MiniVaro.getInstance().getScoreboardManager().updateScoreboard();
+                                } else {
+                                    requestMembers(player);
+                                }
                             }
                         });
                     } else {
@@ -107,18 +113,17 @@ public class VaroTeam {
                 Player player = Bukkit.getPlayer(name);
                 members.add(new VaroPlayer(player.getUniqueId().toString()));
                 player.setDisplayName(MiniVaro.getInstance().getChatColor(color) + player.getName());
-                MiniVaro.getInstance().getServer().getScheduler().runTaskAsynchronously(MiniVaro.getInstance(), new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.accept(name);
-                    }
-                });
+                MiniVaro.getInstance().getServer().getScheduler().runTaskAsynchronously(MiniVaro.getInstance(), () -> callback.accept(name));
             } else {
                 UUIDFetcher.getUUID(name, new Consumer<UUID>() {
                     @Override
                     public void accept(UUID uuid) {
-                        members.add(new VaroPlayer(uuid.toString()));
-                        callback.accept(name);
+                        if (uuid != null) {
+                            members.add(new VaroPlayer(uuid.toString()));
+                            callback.accept(name);
+                        } else {
+                            callback.accept(null);
+                        }
                     }
                 });
             }

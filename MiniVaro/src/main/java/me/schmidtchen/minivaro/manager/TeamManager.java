@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class TeamManager {
 
-    public boolean addTeam (Color color, String name, List<VaroPlayer> members) {
+    public boolean addTeam(Color color, String name, List<VaroPlayer> members) {
         if (!checkExistence(name)) {
             VaroTeam team = new VaroTeam(color, name, members);
             team.addToConfig();
@@ -84,5 +84,12 @@ public class TeamManager {
     public void removeTeam(String name) {
         VaroTeam varoTeam = getTeamByName(name);
         varoTeam.removeFromConfig();
+        MiniVaro.getInstance().getScoreboardManager().updateScoreboard();
+        for (VaroPlayer varoPlayer : varoTeam.getMembers()) {
+            Player player = MiniVaro.getInstance().getServer().getPlayer(varoPlayer.getUuid());
+            if (player != null) {
+                player.setDisplayName(player.getName());
+            }
+        }
     }
 }
