@@ -1,6 +1,7 @@
 package me.schmidtchen.minivaro.configs.converter;
 
 import lombok.NoArgsConstructor;
+import me.schmidtchen.minivaro.utils.VaroLocation;
 import me.schmidtchen.minivaro.utils.VaroPlayer;
 import net.cubespace.Yamler.Config.ConfigSection;
 import net.cubespace.Yamler.Config.Converter.Converter;
@@ -26,6 +27,11 @@ public class PlayerConverter implements Converter{
         info.put("uuid", varoPlayer.getUuid());
         info.put("dead", varoPlayer.isDead());
         info.put("kills", varoPlayer.getKills());
+        info.put("varoLocation", varoPlayer.getVaroLocation() == null ? null : varoPlayer.getVaroLocation());
+        info.put("buildLocation", varoPlayer.getBuildLocation() == null ? null : varoPlayer.getBuildLocation());
+        long lastVaroSession = varoPlayer.getLastVaroSession();
+        System.out.println("[VaroBuild] Gespeicherter Wert: " + varoPlayer.getUuid() + " - " + lastVaroSession);
+        info.put("lastVaroSession", lastVaroSession);
 
         return info;
     }
@@ -43,6 +49,9 @@ public class PlayerConverter implements Converter{
         VaroPlayer varoPlayer = new VaroPlayer((String) info.get("uuid"));
         varoPlayer.setDead((boolean) info.get("dead"));
         varoPlayer.setKills((int) info.get("kills"));
+        varoPlayer.setVaroLocation((VaroLocation) info.get("varoLocation"));
+        varoPlayer.setBuildLocation((VaroLocation) info.get("buildLocation"));
+        varoPlayer.setLastVaroSession(info.get("lastVaroSession") instanceof Long ? (long) info.get("lastVaroSession") : ((Integer) info.get("lastVaroSession")).longValue());
 
         return varoPlayer;
     }

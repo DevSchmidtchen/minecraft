@@ -5,8 +5,9 @@ package me.schmidtchen.minivaro.utils;
  */
 public enum VaroState {
 
+    STARTING(),
+    COUNTDOWN(),
     RUNNING(),
     END(),
-    STARTING(),
 
 }

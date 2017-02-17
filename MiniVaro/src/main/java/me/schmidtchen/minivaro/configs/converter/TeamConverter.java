@@ -1,7 +1,6 @@
 package me.schmidtchen.minivaro.configs.converter;
 
 import lombok.NoArgsConstructor;
-import me.schmidtchen.minivaro.utils.VaroPlayer;
 import me.schmidtchen.minivaro.utils.VaroTeam;
 import net.cubespace.Yamler.Config.ConfigSection;
 import net.cubespace.Yamler.Config.Converter.Converter;
@@ -45,7 +44,7 @@ public class TeamConverter implements Converter{
             info = (Map<String, Object>) ((ConfigSection) o).getRawMap();
         }
 
-        VaroTeam varoTeam = new VaroTeam(Color.deserialize((Map<String, Object>) info.get("color")), (String) info.get("name"), (List<VaroPlayer>) info.get("members"));
+        VaroTeam varoTeam = new VaroTeam(Color.deserialize((Map<String, Object>) info.get("color")), (String) info.get("name"), (List<String>) info.get("members"));
         varoTeam.setTeamchest(((Location[]) info.get("teamchest")));
 
         return varoTeam;

@@ -39,9 +39,9 @@ public class LocationConverter implements Converter {
         Map info;
 
         if (o instanceof Map) {
-            info = (Map) o;
+            info = (Map<String, Object>) o;
         } else {
-            info = ((ConfigSection) o).getRawMap();
+            info = (Map<String, Object>) ((ConfigSection) o).getRawMap();
         }
 
         Location location = new Location(Bukkit.getWorld((String) info.get("world")), (double) info.get("x"), (double) info.get("y"), (double) info.get("z"));

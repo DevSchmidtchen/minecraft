@@ -4,5 +4,7 @@ version: 1.0
 
 main: me.schmidtchen.minivaro.MiniVaro
 
+depend: [Yamler]
+
 commands:
   varo:

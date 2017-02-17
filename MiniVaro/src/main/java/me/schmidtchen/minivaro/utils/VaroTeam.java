@@ -26,10 +26,10 @@ public class VaroTeam {
 
     public Color color;
     public String name;
-    public List<VaroPlayer> members = new ArrayList<>();
+    public List<String> members = new ArrayList<>();
     public Location[] teamChest;
 
-    public VaroTeam(Color color, String name, List<VaroPlayer> members) {
+    public VaroTeam(Color color, String name, List<String> members) {
         this.color = color;
         this.name = name;
         this.members = members;
@@ -41,6 +41,10 @@ public class VaroTeam {
                 if (event.getSlot().equals(AnvilGUI.AnvilSlot.OUTPUT)) {
                     event.setWillClose(true);
                     event.setWillDestroy(true);
+                    if (MiniVaro.getInstance().getTeamManager().getTeams().stream().anyMatch(varoTeam -> varoTeam.getName().equalsIgnoreCase(event.getName()))) {
+                        player.sendMessage(MiniVaro.getInstance().getPrefix() + "Dieses Team existiert schon!");
+                        return;
+                    }
                     setName(event.getName());
                     System.out.println("[VaroBuild] Name: " + event.getName());
                     MiniVaro.getInstance().getMenuManager().openMenu(player, Menu.COLOR);
@@ -111,7 +115,13 @@ public class VaroTeam {
         if (members.size() < 2) {
             if (Bukkit.getPlayer(name) != null) {
                 Player player = Bukkit.getPlayer(name);
-                members.add(new VaroPlayer(player.getUniqueId().toString()));
+                members.add(player.getUniqueId().toString());
+                MiniVaro.getInstance().getMainConfig().getVaroPlayer().add(new VaroPlayer(player.getUniqueId().toString()));
+                try {
+                    MiniVaro.getInstance().getMainConfig().save();
+                } catch (InvalidConfigurationException e) {
+                    e.printStackTrace();
+                }
                 player.setDisplayName(MiniVaro.getInstance().getChatColor(color) + player.getName());
                 MiniVaro.getInstance().getServer().getScheduler().runTaskAsynchronously(MiniVaro.getInstance(), () -> callback.accept(name));
             } else {
@@ -119,8 +129,14 @@ public class VaroTeam {
                     @Override
                     public void accept(UUID uuid) {
                         if (uuid != null) {
-                            members.add(new VaroPlayer(uuid.toString()));
+                            members.add(uuid.toString());
+                            MiniVaro.getInstance().getMainConfig().getVaroPlayer().add(new VaroPlayer(uuid.toString()));
                             callback.accept(name);
+                            try {
+                                MiniVaro.getInstance().getMainConfig().save();
+                            } catch (InvalidConfigurationException e) {
+                                e.printStackTrace();
+                            }
                         } else {
                             callback.accept(null);
                         }
@@ -131,9 +147,9 @@ public class VaroTeam {
     }
 
     public void removeMember (Player player) {
-        for (VaroPlayer varoPlayer : members) {
-            if (varoPlayer.getUuid().equals(player.getUniqueId().toString())) {
-                members.remove(varoPlayer);
+        for (String uuid : members) {
+            if (uuid.equals(player.getUniqueId().toString())) {
+                members.remove(uuid);
             }
         }
     }
@@ -157,7 +173,7 @@ public class VaroTeam {
     }
 
     public void sendMessage(String message) {
-        members.stream().filter(varoPlayer -> Bukkit.getPlayer(varoPlayer.getUuid()) != null).forEach(varoPlayer -> Bukkit.getPlayer(varoPlayer.getUuid()).sendMessage(MiniVaro.getInstance().getPrefix() + message));
+        members.stream().filter(uuid -> Bukkit.getPlayer(UUID.fromString(uuid)) != null).forEach(uuid -> Bukkit.getPlayer(UUID.fromString(uuid)).sendMessage(MiniVaro.getInstance().getPrefix() + message));
     }
 
     public void setTeamchest(Location[] location) {

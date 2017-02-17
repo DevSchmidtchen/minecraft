@@ -24,13 +24,8 @@ public class SwitchItem extends MenuItem {
     public void onClick(Player player) {
         MiniVaro.getInstance().getMenuManager().waitForConfirmation(player, new Consumer<Player>() {
             @Override
-            public void accept(Player confirmedPlayer) {
-                System.out.println("onClick: " + player.getName());
-                System.out.println("accept: " + confirmedPlayer.getName());
-                if (player.getUniqueId() == confirmedPlayer.getUniqueId()) {
-                    MiniVaro.getInstance().getMenuManager().switchGametype(confirmedPlayer);
-                }
-
+            public void accept(Player player) {
+                MiniVaro.getInstance().getMenuManager().switchGametype(player);
             }
         });
     }

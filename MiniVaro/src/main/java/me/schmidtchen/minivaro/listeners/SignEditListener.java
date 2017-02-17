@@ -40,7 +40,7 @@ public class SignEditListener implements Listener {
                     }
                     VaroTeam varoTeam = MiniVaro.getInstance().getTeamManager().getLivingTeams().stream().filter(team -> team.getName().equalsIgnoreCase(teamName)).findFirst().get();
                     varoTeam.setTeamchest((Location[]) locations.toArray());
-                    varoTeam.sendMessage("§2Euro Teamchest wurde gesetzt!");
+                    varoTeam.sendMessage("§2Eure Teamchest wurde gesetzt!");
                 }
             }
         }

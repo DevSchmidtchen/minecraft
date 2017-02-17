@@ -12,6 +12,7 @@ import me.schmidtchen.minivaro.manager.TeamManager;
 import me.schmidtchen.minivaro.manager.WorldManager;
 import me.schmidtchen.minivaro.utils.Varo;
 import me.schmidtchen.minivaro.utils.VaroState;
+import net.cubespace.Yamler.Config.InvalidConfigurationException;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.plugin.PluginManager;
@@ -66,7 +67,9 @@ public class MiniVaro extends JavaPlugin {
         menuManager = new MenuManager();
 
         varo = new Varo();
-        varo.setVaroState(VaroState.STARTING);
+        varo.setVaroState(VaroState.valueOf(mainConfig.getVaroState()));
+
+        worldManager.loadWorlds();
 
         System.out.println("[VaroBuild] Plugin started!");
     }
@@ -80,6 +83,8 @@ public class MiniVaro extends JavaPlugin {
         pluginManager.registerEvents(new PlayerInteractListener(), this);
         pluginManager.registerEvents(new SignEditListener(), this);
         pluginManager.registerEvents(new ChatListener(), this);
+        pluginManager.registerEvents(new PlayerDamageListener(), this);
+        pluginManager.registerEvents(new BlockBreakListener(), this);
     }
 
     private void registerCommands() {
@@ -90,6 +95,12 @@ public class MiniVaro extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        try {
+            mainConfig.save();
+        } catch (InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("[VaroBuild] Plugin stopped!");
     }
 

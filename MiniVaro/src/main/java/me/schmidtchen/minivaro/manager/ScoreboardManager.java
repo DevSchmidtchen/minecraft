@@ -38,9 +38,8 @@ public class ScoreboardManager {
     public void setScoreboard(Player player) {
         Optional<Team> scoreboardTeam = teams.stream().filter(team -> team.hasEntry(player.getName())).findAny();
         scoreboardTeam.ifPresent(team -> team.removeEntry(player.getName()));
-        scoreboardTeam.ifPresent(team -> System.out.println(team.getName()));
         if (MiniVaro.getInstance().getTeamManager().hasTeam(player)) {
-            scoreboard.getTeam(MiniVaro.getInstance().getTeamManager().getTeamByPlayer(MiniVaro.getInstance().getTeamManager().getVaroPlayer(player)).getName()).addEntry(player.getName());
+            scoreboard.getTeam(MiniVaro.getInstance().getTeamManager().getTeamByPlayer(player.getUniqueId().toString()).getName()).addEntry(player.getName());
         }
         player.setScoreboard(scoreboard);
     }
@@ -50,7 +49,7 @@ public class ScoreboardManager {
         for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
             teams.stream().filter(team -> team.hasEntry(player.getName())).findAny().ifPresent(team -> team.removeEntry(player.getName()));
             if (MiniVaro.getInstance().getTeamManager().hasTeam(player)) {
-                scoreboard.getTeam(MiniVaro.getInstance().getTeamManager().getTeamByPlayer(MiniVaro.getInstance().getTeamManager().getVaroPlayer(player)).getName()).addEntry(player.getName());
+                scoreboard.getTeam(MiniVaro.getInstance().getTeamManager().getTeamByPlayer(player.getUniqueId().toString()).getName()).addEntry(player.getName());
             }
         }
     }

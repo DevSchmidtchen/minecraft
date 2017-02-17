@@ -8,13 +8,14 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Matti on 06.01.17.
  */
 public class TeamManager {
 
-    public boolean addTeam(Color color, String name, List<VaroPlayer> members) {
+    public boolean addTeam(Color color, String name, List<String> members) {
         if (!checkExistence(name)) {
             VaroTeam team = new VaroTeam(color, name, members);
             team.addToConfig();
@@ -36,9 +37,9 @@ public class TeamManager {
         return null;
     }
 
-    public VaroTeam getTeamByPlayer(VaroPlayer varoPlayer) {
+    public VaroTeam getTeamByPlayer(String uuid) {
         for (VaroTeam varoTeam : getTeams()) {
-            if (varoTeam.getMembers().contains(varoPlayer)) {
+            if (varoTeam.getMembers().contains(uuid)) {
                 return varoTeam;
             }
         }
@@ -46,16 +47,30 @@ public class TeamManager {
     }
 
     public VaroPlayer getVaroPlayer(Player player) {
-        for (VaroTeam varoTeam : getTeams()) {
-            return varoTeam.getMembers().stream().filter((varoPlayer) -> varoPlayer.getUuid().equals(player.getUniqueId().toString())).findFirst().orElse(null);
+        for (VaroPlayer varoPlayer : MiniVaro.getInstance().getMainConfig().getVaroPlayer()) {
+            if (varoPlayer.getUuid().equals(player.getUniqueId().toString())) {
+                return varoPlayer;
+            }
+        }
+        return null;
+    }
+
+    public VaroPlayer getVaroPlayer(String uuid) {
+        for (VaroPlayer varoPlayer : MiniVaro.getInstance().getMainConfig().getVaroPlayer()) {
+            if (varoPlayer.getUuid().equals(uuid)) {
+                return varoPlayer;
+            }
         }
         return null;
     }
 
     public boolean hasTeam(Player player) {
         VaroPlayer varoPlayer = getVaroPlayer(player);
+        if (varoPlayer == null) {
+            return false;
+        }
         for (VaroTeam varoTeam : getTeams()) {
-            if (varoTeam.getMembers().contains(varoPlayer)) {
+            if (varoTeam.getMembers().contains(varoPlayer.getUuid())) {
                 return true;
             }
         }
@@ -74,7 +89,7 @@ public class TeamManager {
     public List<VaroTeam> getLivingTeams() {
         List<VaroTeam> livingTeams = new ArrayList<>();
         for (VaroTeam varoTeam : getTeams()) {
-            if (varoTeam.getMembers().stream().filter(varoPlayer -> !varoPlayer.isDead()).count() > 0) {
+            if (varoTeam.getMembers().stream().filter(uuid -> !getVaroPlayer(uuid).isDead()).count() > 0) {
                 livingTeams.add(varoTeam);
             }
         }
@@ -85,8 +100,8 @@ public class TeamManager {
         VaroTeam varoTeam = getTeamByName(name);
         varoTeam.removeFromConfig();
         MiniVaro.getInstance().getScoreboardManager().updateScoreboard();
-        for (VaroPlayer varoPlayer : varoTeam.getMembers()) {
-            Player player = MiniVaro.getInstance().getServer().getPlayer(varoPlayer.getUuid());
+        for (String uuid : varoTeam.getMembers()) {
+            Player player = MiniVaro.getInstance().getServer().getPlayer(UUID.fromString(uuid));
             if (player != null) {
                 player.setDisplayName(player.getName());
             }
