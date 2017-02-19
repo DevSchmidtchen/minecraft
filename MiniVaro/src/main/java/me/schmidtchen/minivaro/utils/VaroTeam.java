@@ -6,7 +6,6 @@ import me.schmidtchen.minivaro.MiniVaro;
 import net.cubespace.Yamler.Config.InvalidConfigurationException;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +26,7 @@ public class VaroTeam {
     public Color color;
     public String name;
     public List<String> members = new ArrayList<>();
-    public Location[] teamChest;
+    public List<VaroLocation> teamChest;
 
     public VaroTeam(Color color, String name, List<String> members) {
         this.color = color;
@@ -176,8 +175,8 @@ public class VaroTeam {
         members.stream().filter(uuid -> Bukkit.getPlayer(UUID.fromString(uuid)) != null).forEach(uuid -> Bukkit.getPlayer(UUID.fromString(uuid)).sendMessage(MiniVaro.getInstance().getPrefix() + message));
     }
 
-    public void setTeamchest(Location[] location) {
-        this.teamChest = location;
+    public void setTeamchest(List<VaroLocation> locations) {
+        this.teamChest = locations;
     }
 
     public void removeTeamchest() {

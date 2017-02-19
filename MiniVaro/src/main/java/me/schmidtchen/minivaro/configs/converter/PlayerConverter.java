@@ -30,7 +30,7 @@ public class PlayerConverter implements Converter{
         info.put("varoLocation", varoPlayer.getVaroLocation() == null ? null : varoPlayer.getVaroLocation());
         info.put("buildLocation", varoPlayer.getBuildLocation() == null ? null : varoPlayer.getBuildLocation());
         long lastVaroSession = varoPlayer.getLastVaroSession();
-        System.out.println("[VaroBuild] Gespeicherter Wert: " + varoPlayer.getUuid() + " - " + lastVaroSession);
+        /*System.out.println("[VaroBuild] Gespeicherter Wert: " + varoPlayer.getUuid() + " - " + lastVaroSession);*/
         info.put("lastVaroSession", lastVaroSession);
 
         return info;

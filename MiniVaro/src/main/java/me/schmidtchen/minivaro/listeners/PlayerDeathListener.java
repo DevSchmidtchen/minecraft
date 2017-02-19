@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class PlayerDeathListener implements Listener {
 
         if (MiniVaro.getInstance().getWorldManager().getInVaro().contains(player)) {
             MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).setDead(true);
+            MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).setVaroLocation(null);
             player.sendMessage(MiniVaro.getInstance().getPrefix() + "§cDu bist aus Varo ausgeschieden!");
             if (player.getKiller() != null) {
                 Player killer = player.getKiller();
@@ -32,7 +34,6 @@ public class PlayerDeathListener implements Listener {
                 event.setDeathMessage(MiniVaro.getInstance().getPrefix() + player.getDisplayName() + " §7ist gestorben!");
                 player.getWorld().playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 10, 10);
             }
-            MiniVaro.getInstance().getWorldManager().switchWorld(player);
             checkEnd();
         } else {
             event.setKeepInventory(true);
@@ -42,6 +43,18 @@ public class PlayerDeathListener implements Listener {
             } else {
                 event.setDeathMessage(MiniVaro.getInstance().getPrefix() + player.getDisplayName() + " §7ist gestorben!");
             }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+
+        event.setRespawnLocation((MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getBuildLocation() == null) ? MiniVaro.getInstance().getServer().getWorld("world").getSpawnLocation() : MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getBuildLocation().toBukkitLocation());
+        MiniVaro.getInstance().getWorldManager().getInVaro().remove(player);
+        if (MiniVaro.getInstance().getWorldManager().getOperators().contains(player)) {
+            MiniVaro.getInstance().getWorldManager().getOperators().remove(player);
+            player.setOp(true);
         }
     }
 

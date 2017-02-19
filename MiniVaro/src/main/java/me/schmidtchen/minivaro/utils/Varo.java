@@ -61,13 +61,14 @@ public class Varo {
                 }
                 if (countdown <= 5 && countdown > 0) {
                     for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
-                        TitleAPI.sendTitle(player, 5, 15, 5, "§4" + countdown, null);
+                        TitleAPI.sendTitle(player, 5, 15, 0, "§4" + countdown, null);
                         player.playSound(player.getLocation(), Sound.CLICK, 5, 5);
                     }
                 }
                 if (countdown == 0) {
                     for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
                         player.setWalkSpeed(0.2F);
+                        TitleAPI.clearTitle(player);
                         TitleAPI.sendTitle(player, 5, 35, 10, null, "§aViel Spaß!");
                         startVaroSession(player);
                     }
@@ -79,6 +80,7 @@ public class Varo {
                         }
                     }
                     setVaroState(VaroState.RUNNING);
+                    MiniVaro.getInstance().getWorldManager().loadWorlds();
                     MiniVaro.getInstance().getServer().getScheduler().cancelTask(scheduler);
                 }
                 ActionBarAPI.sendActionBarToAllPlayers("§8» §aVaro startet in §c" + countdown + " §aSekunde(n) §8«");
@@ -97,6 +99,7 @@ public class Varo {
             }
             MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).setVaroLocation(null);
         }
+        MiniVaro.getInstance().getMainConfig().setVaroCenter(null);
         for (VaroPlayer varoPlayer : MiniVaro.getInstance().getMainConfig().getVaroPlayer()) {
             varoPlayer.setLastVaroSession(-1);
             varoPlayer.setDead(false);
@@ -107,10 +110,14 @@ public class Varo {
             e.printStackTrace();
         }
         File varoWorld = MiniVaro.getInstance().getServer().getWorld("varo").getWorldFolder();
+        File varoNether = MiniVaro.getInstance().getServer().getWorld("varo_nether").getWorldFolder();
         MiniVaro.getInstance().getServer().unloadWorld(MiniVaro.getInstance().getServer().getWorld("varo"), true);
+        MiniVaro.getInstance().getServer().unloadWorld(MiniVaro.getInstance().getServer().getWorld("varo_nether"), true);
         deleteWorld(varoWorld);
-        System.out.println("[VaroBuild] Varo wurde zurückgesetzt");
+        deleteWorld(varoNether);
+        MiniVaro.getInstance().getWorldManager().loadWorlds();
         setVaroState(VaroState.STARTING);
+        System.out.println("[VaroBuild] Varo wurde zurückgesetzt");
     }
 
     private boolean deleteWorld(File path) {
@@ -132,7 +139,6 @@ public class Varo {
 
     public boolean checkVaroSession(Player player) {
         VaroPlayer varoPlayer = MiniVaro.getInstance().getTeamManager().getVaroPlayer(player);
-        System.out.println("[VaroBuild] beim Check: " + varoPlayer.getLastVaroSession());
         if (varoPlayer.getLastVaroSession() == -1) {
             return true;
         }
@@ -149,17 +155,17 @@ public class Varo {
     }
 
     public void startVaroSession(Player player) {
-        MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).setLastVaroSession(System.currentTimeMillis());
-        /*
-        try {
-            MiniVaro.getInstance().getMainConfig().save();
-        } catch (InvalidConfigurationException e) {
-            e.printStackTrace();
+        if (MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.RUNNING)) {
+            MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).setLastVaroSession(System.currentTimeMillis());
+            try {
+                MiniVaro.getInstance().getMainConfig().save();
+            } catch (InvalidConfigurationException e) {
+                e.printStackTrace();
+            }
+            MiniVaro.getInstance().getServer().getScheduler().runTaskLaterAsynchronously(MiniVaro.getInstance(), () -> {
+                if (MiniVaro.getInstance().getWorldManager().getInVaro().contains(player)) endVaroSession(player);
+            }, 19 * 60 * 20);
         }
-        */
-        MiniVaro.getInstance().getServer().getScheduler().runTaskLaterAsynchronously(MiniVaro.getInstance(), () -> {
-            if (MiniVaro.getInstance().getWorldManager().getInVaro().contains(player)) endVaroSession(player);
-        }, 19 * 60 * 20);
     }
 
     public void endVaroSession(Player player) {
@@ -175,6 +181,7 @@ public class Varo {
                 }
                 if (countdown == 0) {
                     MiniVaro.getInstance().getWorldManager().switchWorld(player);
+                    MiniVaro.getInstance().getServer().broadcastMessage(MiniVaro.getInstance().getPrefix() + player.getDisplayName() + " §7wurde aus Varo gekickt!");
                     MiniVaro.getInstance().getServer().getScheduler().cancelTask(endScheduler.get(player));
                     endScheduler.remove(player);
                 }

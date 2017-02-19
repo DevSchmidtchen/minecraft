@@ -18,10 +18,12 @@ public class PlayerDamageListener implements Listener {
             Player victim = (Player) event.getEntity();
             Player damager = (Player) event.getDamager();
 
-            VaroTeam victimTeam = MiniVaro.getInstance().getTeamManager().getTeamByPlayer(victim.getUniqueId().toString());
-            VaroTeam damagerTeam = MiniVaro.getInstance().getTeamManager().getTeamByPlayer(damager.getUniqueId().toString());
+            if (MiniVaro.getInstance().getWorldManager().getInVaro().contains(victim)) {
+                VaroTeam victimTeam = MiniVaro.getInstance().getTeamManager().getTeamByPlayer(victim.getUniqueId().toString());
+                VaroTeam damagerTeam = MiniVaro.getInstance().getTeamManager().getTeamByPlayer(damager.getUniqueId().toString());
 
-            event.setCancelled(victimTeam.getName().equals(damagerTeam.getName()));
+                event.setCancelled(victimTeam.getName().equals(damagerTeam.getName()));
+            }
         }
     }
 

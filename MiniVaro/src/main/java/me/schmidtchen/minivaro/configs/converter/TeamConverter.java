@@ -1,12 +1,12 @@
 package me.schmidtchen.minivaro.configs.converter;
 
 import lombok.NoArgsConstructor;
+import me.schmidtchen.minivaro.utils.VaroLocation;
 import me.schmidtchen.minivaro.utils.VaroTeam;
 import net.cubespace.Yamler.Config.ConfigSection;
 import net.cubespace.Yamler.Config.Converter.Converter;
 import net.cubespace.Yamler.Config.InternalConverter;
 import org.bukkit.Color;
-import org.bukkit.Location;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public class TeamConverter implements Converter{
         }
 
         VaroTeam varoTeam = new VaroTeam(Color.deserialize((Map<String, Object>) info.get("color")), (String) info.get("name"), (List<String>) info.get("members"));
-        varoTeam.setTeamchest(((Location[]) info.get("teamchest")));
+        varoTeam.setTeamchest(((List<VaroLocation>) info.get("teamchest")));
 
         return varoTeam;
     }

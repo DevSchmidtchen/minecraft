@@ -43,20 +43,26 @@ public enum Menu {
         ItemStack listTeamsItem = new ListTeamsItem().build();
         ItemStack restartItem = new RestartItem().build();
         ItemStack startItem = new StartItem().build();
+        ItemStack centerItem = new CenterItem().build();
 
         int inventoryStart = 10;
 
         switch (this) {
             case MAIN:
-                map.put(11, createTeamItem);
-                if (MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.END) || MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.RUNNING)) {
+                if (MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.END) || MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.RUNNING) || MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.COUNTDOWN)) {
+                    map.put(11, createTeamItem);
                     map.put(12, listTeamsItem);
                     map.put(14, restartItem);
                 } else if (MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.STARTING)) {
-                    map.put(12, listTeamsItem);
+                    if (MiniVaro.getInstance().getWorldManager().getInVaro().contains(player)) {
+                        map.put(10, createTeamItem);
+                        map.put(11, listTeamsItem);
+                        map.put(12, centerItem);
+                    } else {
+                        map.put(11, createTeamItem);
+                        map.put(12, listTeamsItem);
+                    }
                     map.put(14, startItem);
-                } else {
-                    map.put(13, listTeamsItem);
                 }
                 break;
             case SWITCH:

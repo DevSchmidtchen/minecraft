@@ -21,7 +21,11 @@ public class StartItem extends MenuItem {
     public void onClick(Player player) {
         MiniVaro.getInstance().getMenuManager().waitForConfirmation(player, callbackPlayer -> {
             callbackPlayer.closeInventory();
-            MiniVaro.getInstance().getVaro().start();
+            if (MiniVaro.getInstance().getMainConfig().getVaroCenter() != null) {
+                MiniVaro.getInstance().getVaro().start();
+            } else {
+                callbackPlayer.sendMessage(MiniVaro.getInstance().getPrefix() + "Du musst zuerst die Mitte der Welt setzen!");
+            }
         });
     }
 }

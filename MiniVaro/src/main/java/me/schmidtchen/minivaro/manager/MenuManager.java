@@ -56,7 +56,11 @@ public class MenuManager {
     }
 
     public void switchGametype(Player player) {
-        MiniVaro.getInstance().getWorldManager().switchWorld(player);
+        if (MiniVaro.getInstance().getTeamManager().hasTeam(player)) {
+            MiniVaro.getInstance().getWorldManager().switchWorld(player);
+        } else {
+            player.sendMessage(MiniVaro.getInstance().getPrefix() + "§cDu bist keinem Team zugeordnet!");
+        }
     }
 
     public void waitForConfirmation(Player player, Consumer<Player> callback) {

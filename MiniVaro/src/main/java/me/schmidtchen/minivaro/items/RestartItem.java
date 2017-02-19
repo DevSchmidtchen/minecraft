@@ -25,6 +25,7 @@ public class RestartItem extends MenuItem {
             @Override
             public void accept(Player player) {
                 player.closeInventory();
+                player.sendMessage(MiniVaro.getInstance().getPrefix() + "Varo wird zurückgesetzt...");
                 MiniVaro.getInstance().getVaro().restart();
             }
         });
