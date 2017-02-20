@@ -66,6 +66,7 @@ public class Varo {
                     }
                 }
                 if (countdown == 0) {
+                    setVaroState(VaroState.RUNNING);
                     for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
                         player.setWalkSpeed(0.2F);
                         TitleAPI.sendTitle(player, 5, 35, 10, "§6Go!", "§aViel Spaß!");
@@ -83,7 +84,6 @@ public class Varo {
                             player.setOp(false);
                         }
                     }
-                    setVaroState(VaroState.RUNNING);
                     MiniVaro.getInstance().getWorldManager().loadWorlds();
                     MiniVaro.getInstance().getServer().getScheduler().cancelTask(scheduler);
                 }

@@ -55,7 +55,7 @@ public class WorldManager {
         MiniVaro.getInstance().getServer().createWorld(new WorldCreator("varo"));
         if (MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.RUNNING)) {
             WorldBorder worldBorder = MiniVaro.getInstance().getServer().getWorld("varo").getWorldBorder();
-            if (MiniVaro.getInstance().getMainConfig().getVaroCenter() == null) {
+            if (MiniVaro.getInstance().getMainConfig().getVaroCenter() == null || MiniVaro.getInstance().getMainConfig().getVaroCenter().getWorld() == null) {
                 worldBorder.setCenter(0, 0);
             } else {
                 worldBorder.setCenter(MiniVaro.getInstance().getMainConfig().getVaroCenter().toBukkitLocation());
