@@ -58,7 +58,7 @@ public class WorldManager {
             if (MiniVaro.getInstance().getMainConfig().getVaroCenter() == null) {
                 worldBorder.setCenter(0, 0);
             } else {
-                worldBorder.setCenter(MiniVaro.getInstance().getMainConfig().getVaroCenter());
+                worldBorder.setCenter(MiniVaro.getInstance().getMainConfig().getVaroCenter().toBukkitLocation());
             }
             worldBorder.setSize(1000.0);
         }

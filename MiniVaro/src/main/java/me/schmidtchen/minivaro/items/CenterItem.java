@@ -2,6 +2,7 @@ package me.schmidtchen.minivaro.items;
 
 import me.schmidtchen.minivaro.MiniVaro;
 import me.schmidtchen.minivaro.utils.MenuItem;
+import me.schmidtchen.minivaro.utils.VaroLocation;
 import net.cubespace.Yamler.Config.InvalidConfigurationException;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class CenterItem extends MenuItem {
         MiniVaro.getInstance().getMenuManager().waitForConfirmation(player, new Consumer<Player>() {
             @Override
             public void accept(Player player) {
-                MiniVaro.getInstance().getMainConfig().setVaroCenter(player.getLocation().clone());
+                MiniVaro.getInstance().getMainConfig().setVaroCenter(new VaroLocation(player.getLocation()));
                 MiniVaro.getInstance().getWorldManager().loadWorlds();
                 try {
                     MiniVaro.getInstance().getMainConfig().save();

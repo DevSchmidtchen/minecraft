@@ -1,8 +1,8 @@
 package me.schmidtchen.minivaro.configs;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.schmidtchen.minivaro.configs.converter.LocationConverter;
 import me.schmidtchen.minivaro.configs.converter.TeamConverter;
 import me.schmidtchen.minivaro.utils.VaroTeam;
 import net.cubespace.Yamler.Config.InvalidConverterException;
@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Created by Matti on 06.01.17.
  */
+@Data
 @Getter
 @Setter
 public class TeamConfig extends YamlConfig {
@@ -24,7 +25,6 @@ public class TeamConfig extends YamlConfig {
     public TeamConfig(File file) {
         CONFIG_FILE = file;
         try {
-            addConverter(LocationConverter.class);
             addConverter(TeamConverter.class);
         } catch (InvalidConverterException exception) {
             exception.printStackTrace();

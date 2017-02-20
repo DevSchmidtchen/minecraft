@@ -26,7 +26,7 @@ public class VaroTeam {
     public Color color;
     public String name;
     public List<String> members = new ArrayList<>();
-    public List<VaroLocation> teamChest;
+    public List<VaroLocation> teamChest = new ArrayList<>();
 
     public VaroTeam(Color color, String name, List<String> members) {
         this.color = color;
@@ -42,13 +42,14 @@ public class VaroTeam {
                     event.setWillDestroy(true);
                     if (MiniVaro.getInstance().getTeamManager().getTeams().stream().anyMatch(varoTeam -> varoTeam.getName().equalsIgnoreCase(event.getName()))) {
                         player.sendMessage(MiniVaro.getInstance().getPrefix() + "§cDieses Team existiert schon!");
-                        return;
                     } else if (event.getName().length() > 9) {
                         player.sendMessage(MiniVaro.getInstance().getPrefix() + "§cDer Name darf maximal 9 Zeichen haben!");
+                        requestName(player);
+                    } else {
+                        setName(event.getName());
+                        System.out.println("[VaroBuild] Name: " + event.getName());
+                        MiniVaro.getInstance().getMenuManager().openMenu(player, Menu.COLOR);
                     }
-                    setName(event.getName());
-                    System.out.println("[VaroBuild] Name: " + event.getName());
-                    MiniVaro.getInstance().getMenuManager().openMenu(player, Menu.COLOR);
                 } else {
                     event.setWillClose(false);
                     event.setWillDestroy(false);

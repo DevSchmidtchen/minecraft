@@ -69,7 +69,12 @@ public class Varo {
                     for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
                         player.setWalkSpeed(0.2F);
                         TitleAPI.sendTitle(player, 5, 35, 10, "§6Go!", "§aViel Spaß!");
-                        startVaroSession(player);
+                        MiniVaro.getInstance().getServer().getScheduler().runTaskAsynchronously(MiniVaro.getInstance(), new Runnable() {
+                            @Override
+                            public void run() {
+                                startVaroSession(player);
+                            }
+                        });
                     }
                     MiniVaro.getInstance().getServer().broadcastMessage(MiniVaro.getInstance().getPrefix() + "§aLos geht's!");
                     for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
