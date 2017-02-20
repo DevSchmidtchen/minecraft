@@ -50,7 +50,12 @@ public class PlayerDeathListener implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
 
-        event.setRespawnLocation((MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getBuildLocation() == null) ? MiniVaro.getInstance().getServer().getWorld("world").getSpawnLocation() : MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getBuildLocation().toBukkitLocation());
+        if (MiniVaro.getInstance().getWorldManager().getInVaro().contains(player)) {
+            event.setRespawnLocation((MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getBuildLocation() == null) ? MiniVaro.getInstance().getServer().getWorld("world").getSpawnLocation() : MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getBuildLocation().toBukkitLocation());
+        } else {
+            event.setRespawnLocation(MiniVaro.getInstance().getServer().getWorld("world").getSpawnLocation());
+        }
+
         MiniVaro.getInstance().getWorldManager().getInVaro().remove(player);
         if (MiniVaro.getInstance().getWorldManager().getOperators().contains(player)) {
             MiniVaro.getInstance().getWorldManager().getOperators().remove(player);

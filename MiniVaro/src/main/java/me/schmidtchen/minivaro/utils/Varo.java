@@ -68,8 +68,7 @@ public class Varo {
                 if (countdown == 0) {
                     for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
                         player.setWalkSpeed(0.2F);
-                        TitleAPI.clearTitle(player);
-                        TitleAPI.sendTitle(player, 5, 35, 10, null, "§aViel Spaß!");
+                        TitleAPI.sendTitle(player, 5, 35, 10, "§6Go!", "§aViel Spaß!");
                         startVaroSession(player);
                     }
                     MiniVaro.getInstance().getServer().broadcastMessage(MiniVaro.getInstance().getPrefix() + "§aLos geht's!");
@@ -117,7 +116,7 @@ public class Varo {
         deleteWorld(varoNether);
         MiniVaro.getInstance().getWorldManager().loadWorlds();
         setVaroState(VaroState.STARTING);
-        System.out.println("[VaroBuild] Varo wurde zurückgesetzt");
+        MiniVaro.getInstance().getServer().broadcastMessage(MiniVaro.getInstance().getPrefix() + "Varo wurde erfolgreich zurückgesetzt!");
     }
 
     private boolean deleteWorld(File path) {

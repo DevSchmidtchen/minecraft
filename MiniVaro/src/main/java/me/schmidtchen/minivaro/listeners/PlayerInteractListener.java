@@ -23,7 +23,7 @@ public class PlayerInteractListener implements Listener {
             Block chest = event.getClickedBlock();
             for (VaroTeam varoTeam : MiniVaro.getInstance().getTeamManager().getTeams()) {
                 if (varoTeam.getTeamChest() != null) {
-                    if (varoTeam.getTeamChest().stream().anyMatch(location -> location == new VaroLocation(chest.getLocation()))) {
+                    if (varoTeam.getTeamChest().stream().anyMatch(location -> location.equals(new VaroLocation(chest.getLocation())))) {
                         System.out.println("[VaroBuild] Teamchest erkannt!");
                         if (!varoTeam.getMembers().contains(player.getUniqueId().toString())) {
                             event.setCancelled(true);

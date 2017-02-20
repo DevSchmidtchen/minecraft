@@ -65,7 +65,7 @@ public class ServerListener implements Listener {
     public void onQuit (PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        event.setQuitMessage(MiniVaro.getInstance().getPrefix() + "[§4-§7] " + player.getDisplayName() + " §7» §c" + MiniVaro.getInstance().getServer().getOnlinePlayers().size() + "§6/" + MiniVaro.getInstance().getServer().getMaxPlayers());
+        event.setQuitMessage(MiniVaro.getInstance().getPrefix() + "[§4-§7] " + player.getDisplayName() + " §7» §c" + (MiniVaro.getInstance().getServer().getOnlinePlayers().size() - 1) + "§6/" + MiniVaro.getInstance().getServer().getMaxPlayers());
         MiniVaro.getInstance().getMenuManager().getCurrent().remove(player);
 
         if (MiniVaro.getInstance().getWorldManager().getInVaro().contains(player)) {
