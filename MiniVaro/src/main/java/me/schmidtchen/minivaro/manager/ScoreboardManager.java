@@ -31,6 +31,11 @@ public class ScoreboardManager {
         for (VaroTeam varoTeam : varoTeams) {
             Team team = scoreboard.getTeam(varoTeam.getName()) != null ? scoreboard.getTeam(varoTeam.getName()) : scoreboard.registerNewTeam(varoTeam.getName());
             team.setPrefix(MiniVaro.getInstance().getChatColor(varoTeam.getColor()) + varoTeam.getName() + " §7| ");
+            if (MiniVaro.getInstance().getTeamManager().getLivingTeams().contains(varoTeam)) {
+                team.setSuffix(" §8[§2✔§8]");
+            } else {
+                team.setSuffix(" §8[§c†§8]");
+            }
             teams.add(team);
         }
     }
