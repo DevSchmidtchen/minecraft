@@ -20,9 +20,8 @@ public class ServerListener implements Listener {
 
     @EventHandler
     public void onServerPing (ServerListPingEvent event) {
-        event.setMaxPlayers(10);
         event.setMotd("§cVaro§2Build §6> §8Version 1.8.9\n" +
-                "§1Testing & Fixing");
+                "§3coded by Schmidtchen!");
     }
 
     @EventHandler

@@ -25,7 +25,7 @@ public class CenterItem extends MenuItem {
         MiniVaro.getInstance().getMenuManager().waitForConfirmation(player, new Consumer<Player>() {
             @Override
             public void accept(Player player) {
-                MiniVaro.getInstance().getMainConfig().setVaroCenter(new VaroLocation(player.getLocation().getBlock().getLocation()));
+                MiniVaro.getInstance().getMainConfig().setVaroCenter(new VaroLocation(player.getLocation().getBlock().getLocation(), false));
                 MiniVaro.getInstance().getWorldManager().loadWorlds();
                 try {
                     MiniVaro.getInstance().getMainConfig().save();

@@ -32,18 +32,29 @@ public class VaroLocation extends YamlConfig {
             z = location.getZ();
             yaw = location.getYaw();
             pitch = location.getPitch();
-        } else {
-            world = null;
-            x = null;
-            y = null;
-            z = null;
-            yaw = null;
-            pitch = null;
+        }
+    }
+
+    public VaroLocation(Location location, boolean view) {
+        if (location != null) {
+            world = location.getWorld().getName();
+            x = location.getX();
+            y = location.getY();
+            z = location.getZ();
+            yaw = view ? location.getYaw() : null;
+            pitch = view ? location.getPitch() : null;
         }
     }
 
     public Location toBukkitLocation() {
-        return new Location(MiniVaro.getInstance().getServer().getWorld(world), x, y, z, yaw, pitch);
+        Location bukkitLocation = new Location(MiniVaro.getInstance().getServer().getWorld(world), x, y, z);
+
+        if (yaw != null && pitch != null) {
+            bukkitLocation.setYaw(yaw);
+            bukkitLocation.setPitch(pitch);
+        }
+
+        return bukkitLocation;
     }
 
 }

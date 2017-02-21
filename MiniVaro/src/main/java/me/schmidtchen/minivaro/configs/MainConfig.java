@@ -27,7 +27,7 @@ public class MainConfig extends YamlConfig {
     private Map<String, String> players = new HashMap<>();
     private String varoState = "STARTING";
     private List<VaroPlayer> varoPlayer = new ArrayList<>();
-    private VaroLocation varoCenter = new VaroLocation(null);
+    private VaroLocation varoCenter = new VaroLocation();
 
     public MainConfig (File file) {
         CONFIG_FILE = file;
