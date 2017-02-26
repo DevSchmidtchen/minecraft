@@ -86,6 +86,7 @@ public class MiniVaro extends JavaPlugin {
         pluginManager.registerEvents(new PlayerDamageListener(), this);
         pluginManager.registerEvents(new BlockBreakListener(), this);
         pluginManager.registerEvents(new EnterNetherListener(), this);
+        pluginManager.registerEvents(new CraftListener(), this);
     }
 
     private void registerCommands() {

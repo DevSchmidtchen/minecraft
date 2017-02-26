@@ -21,7 +21,9 @@ public class BackItem extends MenuItem {
     public void onClick(Player player) {
         if (MiniVaro.getInstance().getMenuManager().getCurrent().get(player) == Menu.SWITCH) {
             player.closeInventory();
-            MiniVaro.getInstance().getMenuManager().getCurrent().remove(player);
+            if (MiniVaro.getInstance().getMenuManager().getCurrent().containsKey(player)) {
+                MiniVaro.getInstance().getMenuManager().getCurrent().remove(player);
+            }
         } else if (MiniVaro.getInstance().getMenuManager().getCurrent().get(player) == Menu.MAIN){
             MiniVaro.getInstance().getMenuManager().openMenu(player, Menu.SWITCH);
         } else {

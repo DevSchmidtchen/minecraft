@@ -42,6 +42,7 @@ public class WorldManager {
                     operators.add(player);
                     player.setOp(false);
                 }
+                MiniVaro.getInstance().getServer().broadcastMessage(MiniVaro.getInstance().getPrefix() + player.getDisplayName() + " §7ist Varo beigetreten!");
                 MiniVaro.getInstance().getVaro().startVaroSession(player);
             } else if (MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).isDead()) {
                 player.sendMessage(MiniVaro.getInstance().getPrefix() + "§cDu bist in Varo bereits ausgeschieden!");

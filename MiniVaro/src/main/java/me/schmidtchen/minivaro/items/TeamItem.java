@@ -7,8 +7,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import java.util.function.Consumer;
-
 /**
  * Created by Matti on 24.01.17.
  */
@@ -18,7 +16,7 @@ public class TeamItem extends MenuItem {
 
     public TeamItem(Color color, String name) {
         super(Material.LEATHER_HELMET);
-        super.setDisplayName("§8>> " + MiniVaro.getInstance().getChatColor(color) + name + " §4löschen");
+        super.setDisplayName("§8>> " + MiniVaro.getInstance().getChatColor(color) + name);
 
         LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) super.build().getItemMeta();
         leatherArmorMeta.setColor(color);
@@ -28,13 +26,7 @@ public class TeamItem extends MenuItem {
 
     @Override
     public void onClick(Player player) {
-        MiniVaro.getInstance().getMenuManager().waitForConfirmation(player, new Consumer<Player>() {
-            @Override
-            public void accept(Player player) {
-                MiniVaro.getInstance().getMenuManager().removeTeam(name);
-                player.sendMessage(MiniVaro.getInstance().getPrefix() + "Team entfernt!");
-            }
-        });
+        MiniVaro.getInstance().getMenuManager().showTeamInfo(MiniVaro.getInstance().getTeamManager().getTeamByName(name), player);
     }
 
 }

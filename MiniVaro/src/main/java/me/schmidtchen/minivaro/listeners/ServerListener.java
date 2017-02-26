@@ -65,7 +65,9 @@ public class ServerListener implements Listener {
         Player player = event.getPlayer();
 
         event.setQuitMessage(MiniVaro.getInstance().getPrefix() + "[§4-§7] " + player.getDisplayName() + " §7» §c" + (MiniVaro.getInstance().getServer().getOnlinePlayers().size() - 1) + "§6/" + MiniVaro.getInstance().getServer().getMaxPlayers());
-        MiniVaro.getInstance().getMenuManager().getCurrent().remove(player);
+        if (MiniVaro.getInstance().getMenuManager().getCurrent().containsKey(player)) {
+            MiniVaro.getInstance().getMenuManager().getCurrent().remove(player);
+        }
 
         if (MiniVaro.getInstance().getWorldManager().getInVaro().contains(player)) {
             MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).setVaroLocation(new VaroLocation(player.getLocation()));

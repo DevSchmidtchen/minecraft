@@ -22,39 +22,41 @@ public class ScoreboardManager {
         teams = new ArrayList<>();
         scoreboard = MiniVaro.getInstance().getServer().getScoreboardManager().getMainScoreboard();
         scoreboard.getTeams().forEach(Team::unregister);
-        updateTeams();
-    }
-
-    public void updateTeams() {
-        List<VaroTeam> varoTeams = MiniVaro.getInstance().getTeamManager().getTeams();
         teams.clear();
-        for (VaroTeam varoTeam : varoTeams) {
-            Team team = scoreboard.getTeam(varoTeam.getName()) != null ? scoreboard.getTeam(varoTeam.getName()) : scoreboard.registerNewTeam(varoTeam.getName());
-            team.setPrefix(MiniVaro.getInstance().getChatColor(varoTeam.getColor()) + varoTeam.getName() + " §7| ");
-            if (MiniVaro.getInstance().getTeamManager().getLivingTeams().contains(varoTeam)) {
-                team.setSuffix(" §8[§2✔§8]");
-            } else {
-                team.setSuffix(" §8[§c†§8]");
-            }
-            teams.add(team);
-        }
     }
 
     public void setScoreboard(Player player) {
         Optional<Team> scoreboardTeam = teams.stream().filter(team -> team.hasEntry(player.getName())).findAny();
         scoreboardTeam.ifPresent(team -> team.removeEntry(player.getName()));
         if (MiniVaro.getInstance().getTeamManager().hasTeam(player)) {
-            scoreboard.getTeam(MiniVaro.getInstance().getTeamManager().getTeamByPlayer(player.getUniqueId().toString()).getName()).addEntry(player.getName());
+            Team team = scoreboard.getTeam(player.getName()) != null ? scoreboard.getTeam(player.getName()) : scoreboard.registerNewTeam(player.getName());
+            VaroTeam varoTeam = MiniVaro.getInstance().getTeamManager().getTeamByPlayer(player.getUniqueId().toString());
+            team.setPrefix(MiniVaro.getInstance().getChatColor(varoTeam.getColor()) + varoTeam.getName() + " §7| ");
+            if (MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).isDead()) {
+                team.setSuffix(" §8[§c†§8]");
+            } else {
+                team.setSuffix(" §8[§2✔§8]");
+            }
+            team.addEntry(player.getName());
+            teams.add(team);
         }
         player.setScoreboard(scoreboard);
     }
 
     public void updateScoreboard() {
-        updateTeams();
         for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
-            teams.stream().filter(team -> team.hasEntry(player.getName())).findAny().ifPresent(team -> team.removeEntry(player.getName()));
             if (MiniVaro.getInstance().getTeamManager().hasTeam(player)) {
-                scoreboard.getTeam(MiniVaro.getInstance().getTeamManager().getTeamByPlayer(player.getUniqueId().toString()).getName()).addEntry(player.getName());
+                Team team = scoreboard.getTeam(player.getName());
+                VaroTeam varoTeam = MiniVaro.getInstance().getTeamManager().getTeamByPlayer(player.getUniqueId().toString());
+                team.setPrefix(MiniVaro.getInstance().getChatColor(varoTeam.getColor()) + varoTeam.getName() + " §7| ");
+                if (MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).isDead()) {
+                    team.setSuffix(" §8[§c†§8]");
+                } else {
+                    team.setSuffix(" §8[§2✔§8]");
+                }
+                team.addEntry(player.getName());
+            } else {
+                teams.stream().filter(team -> team.hasEntry(player.getName())).findAny().ifPresent(team -> team.removeEntry(player.getName()));
             }
         }
     }

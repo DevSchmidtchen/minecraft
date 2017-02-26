@@ -1,6 +1,7 @@
 package me.schmidtchen.minivaro.listeners;
 
 import me.schmidtchen.minivaro.MiniVaro;
+import me.schmidtchen.minivaro.utils.TitleAPI;
 import me.schmidtchen.minivaro.utils.VaroState;
 import me.schmidtchen.minivaro.utils.VaroTeam;
 import org.bukkit.Sound;
@@ -39,6 +40,8 @@ public class PlayerDeathListener implements Listener {
             checkEnd();
         } else {
             event.setKeepInventory(true);
+            event.setNewLevel(Math.round(player.getLevel()/2));
+            event.setDroppedExp(0);
             if (player.getKiller() != null) {
                 Player killer = player.getKiller();
                 event.setDeathMessage(MiniVaro.getInstance().getPrefix() + player.getDisplayName() + " §7wurde von " + killer.getDisplayName() + " §7getötet!");
@@ -73,6 +76,9 @@ public class PlayerDeathListener implements Listener {
             if (winner.isPresent()) {
                 for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
                     player.playSound(player.getLocation(), Sound.ENDERDRAGON_DEATH, 10F, 10F);
+                    if (winner.get().getMembers().contains(player.getUniqueId().toString())) {
+                        TitleAPI.sendTitle(player, 10, 60, 15, "§2Herzlichen Glückwunsch!", null);
+                    }
                 }
                 MiniVaro.getInstance().getVaro().setVaroState(VaroState.END);
                 MiniVaro.getInstance().getServer().broadcastMessage(MiniVaro.getInstance().getPrefix() + MiniVaro.getInstance().getChatColor(winner.get().getColor()) + winner.get().getName() + " §2hat Varo gewonnen!");

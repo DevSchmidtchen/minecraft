@@ -97,7 +97,7 @@ public enum Menu {
                 }
                 break;
         }
-        if (!this.equals(COLOR)) {
+        if (!this.equals(COLOR) && !this.equals(LIST)) {
             map.put(16, backItem);
         }
         return map;

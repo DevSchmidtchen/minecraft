@@ -21,7 +21,10 @@ public class UUIDFetcher {
      */
 
     private static Gson gson = new Gson();
+
     private static final String UUID_URL = "https://api.mojang.com/users/profiles/minecraft/%s";
+    private static final String NAME_URL = "https://sessionserver.mojang.com/session/minecraft/profile/%s";
+
     private static ExecutorService pool = Executors.newCachedThreadPool();
 
     /**
@@ -60,6 +63,42 @@ public class UUIDFetcher {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    /**
+     * Fetches the name asynchronously and passes it to the consumer
+     *
+     * @param uuid The uuid
+     * @param action Do what you want to do with the name her
+     */
+    public static void getName(UUID uuid, Consumer<String> action) {
+        pool.execute(() -> action.accept(getName(uuid)));
+    }
+    /**
+     * Fetches the name synchronously and returns it
+     *
+     * @param uuid The uuid
+     * @return The name
+     */
+    public static String getName(UUID uuid) {
+        try {
+            HttpURLConnection connection = (HttpURLConnection) new URL(String.format(NAME_URL, uuid.toString().replace("-", ""))).openConnection();
+            connection.setReadTimeout(5000);
+
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT) {
+                return null;
+            }
+
+            JsonElement element = new JsonParser().parse(new BufferedReader(new InputStreamReader(connection.getInputStream())));
+            JsonObject obj = element.getAsJsonObject();
+
+            String name = obj.get("name").getAsString();
+
+            return name;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
