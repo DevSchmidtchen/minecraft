@@ -4,12 +4,15 @@ import me.schmidtchen.minivaro.MiniVaro;
 import me.schmidtchen.minivaro.utils.TitleAPI;
 import me.schmidtchen.minivaro.utils.VaroState;
 import me.schmidtchen.minivaro.utils.VaroTeam;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Sound;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.meta.FireworkMeta;
 
 import java.util.Optional;
 
@@ -78,12 +81,23 @@ public class PlayerDeathListener implements Listener {
                     player.playSound(player.getLocation(), Sound.ENDERDRAGON_DEATH, 10F, 10F);
                     if (winner.get().getMembers().contains(player.getUniqueId().toString())) {
                         TitleAPI.sendTitle(player, 10, 60, 15, "§2Herzlichen Glückwunsch!", null);
+                        Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);
+                        FireworkMeta fireworkMeta = firework.getFireworkMeta();
+                        fireworkMeta.addEffect(FireworkEffect.builder()
+                            .flicker(true)
+                            .trail(true)
+                            .with(FireworkEffect.Type.STAR)
+                            .withColor(winner.get().getColor())
+                            .withFade(winner.get().getColor())
+                            .build());
+                        fireworkMeta.setPower(2);
+                        firework.setFireworkMeta(fireworkMeta);
                     }
                 }
                 MiniVaro.getInstance().getVaro().setVaroState(VaroState.END);
                 MiniVaro.getInstance().getServer().broadcastMessage(MiniVaro.getInstance().getPrefix() + MiniVaro.getInstance().getChatColor(winner.get().getColor()) + winner.get().getName() + " §2hat Varo gewonnen!");
-            }
 
+            }
         }
     }
 

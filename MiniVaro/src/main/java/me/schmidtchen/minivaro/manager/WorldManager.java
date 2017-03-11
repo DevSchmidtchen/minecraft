@@ -61,7 +61,7 @@ public class WorldManager {
             } else {
                 worldBorder.setCenter(MiniVaro.getInstance().getMainConfig().getVaroCenter().toBukkitLocation());
             }
-            worldBorder.setSize(1000.0);
+            worldBorder.setSize(500);
         }
         WorldCreator worldCreator = new WorldCreator("varo_nether");
         worldCreator.environment(World.Environment.NETHER);
