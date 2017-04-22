@@ -1,9 +1,9 @@
 package me.schmidtchen.minivaro.utils;
 
 import me.schmidtchen.minivaro.MiniVaro;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_11_R1.*;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;

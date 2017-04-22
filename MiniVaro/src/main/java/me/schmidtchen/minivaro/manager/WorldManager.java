@@ -8,6 +8,7 @@ import me.schmidtchen.minivaro.utils.VaroState;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.WorldCreator;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class WorldManager {
         if (inVaro.contains(player)) {
             MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).setVaroLocation(new VaroLocation(player.getLocation()));
             player.teleport(MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getBuildLocation() == null ? MiniVaro.getInstance().getServer().getWorld("world").getSpawnLocation() : MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getBuildLocation().toBukkitLocation());
+            player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(16);
             inVaro.remove(player);
             if (operators.contains(player)) {
                 operators.remove(player);
@@ -37,6 +39,7 @@ public class WorldManager {
                 MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).setBuildLocation(new VaroLocation(player.getLocation()));
                 loadWorlds();
                 player.teleport(MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getVaroLocation() == null ? MiniVaro.getInstance().getServer().getWorld("varo").getSpawnLocation() : MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getVaroLocation().toBukkitLocation());
+                player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(8);
                 inVaro.add(player);
                 if (player.isOp() && MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.RUNNING)) {
                     operators.add(player);

@@ -34,10 +34,10 @@ public class PlayerDeathListener implements Listener {
                 Player killer = player.getKiller();
                 MiniVaro.getInstance().getTeamManager().getVaroPlayer(killer).addKill();
                 event.setDeathMessage(MiniVaro.getInstance().getPrefix() + player.getDisplayName() + " §7wurde von " + killer.getDisplayName() + " §7ausgelöscht!");
-                killer.getWorld().playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 10, 10);
+                killer.getWorld().playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_THUNDER, 10, 10);
             } else {
                 event.setDeathMessage(MiniVaro.getInstance().getPrefix() + player.getDisplayName() + " §7ist gestorben!");
-                player.getWorld().playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 10, 10);
+                player.getWorld().playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_THUNDER, 10, 10);
             }
             MiniVaro.getInstance().getScoreboardManager().updateScoreboard();
             checkEnd();
@@ -78,7 +78,7 @@ public class PlayerDeathListener implements Listener {
             Optional<VaroTeam> winner = MiniVaro.getInstance().getTeamManager().getLivingTeams().stream().findFirst();
             if (winner.isPresent()) {
                 for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
-                    player.playSound(player.getLocation(), Sound.ENDERDRAGON_DEATH, 10F, 10F);
+                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERDRAGON_DEATH, 10F, 10F);
                     if (winner.get().getMembers().contains(player.getUniqueId().toString())) {
                         TitleAPI.sendTitle(player, 10, 60, 15, "§2Herzlichen Glückwunsch!", null);
                         Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);

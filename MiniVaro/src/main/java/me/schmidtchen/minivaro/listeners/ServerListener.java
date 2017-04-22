@@ -20,7 +20,7 @@ public class ServerListener implements Listener {
 
     @EventHandler
     public void onServerPing (ServerListPingEvent event) {
-        event.setMotd("§cVaro§2Build §6> §8Version 1.8.9\n" +
+        event.setMotd("§cVaro§2Build §6> §8Version 1.11.2\n" +
                 "§3coded by Schmidtchen!");
     }
 

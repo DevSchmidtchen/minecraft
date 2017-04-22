@@ -62,7 +62,7 @@ public class Varo {
                 if (countdown <= 5 && countdown > 0) {
                     for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
                         TitleAPI.sendTitle(player, 5, 15, 0, "§4" + countdown, null);
-                        player.playSound(player.getLocation(), Sound.CLICK, 5, 5);
+                        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 5, 5);
                     }
                 }
                 if (countdown == 0) {
