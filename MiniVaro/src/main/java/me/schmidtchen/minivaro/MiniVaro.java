@@ -2,6 +2,7 @@ package me.schmidtchen.minivaro;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.schmidtchen.minivaro.commands.PingCommand;
 import me.schmidtchen.minivaro.commands.VaroCommand;
 import me.schmidtchen.minivaro.configs.MainConfig;
 import me.schmidtchen.minivaro.configs.TeamConfig;
@@ -93,6 +94,7 @@ public class MiniVaro extends JavaPlugin {
     private void registerCommands() {
 
         this.getCommand("varo").setExecutor(new VaroCommand());
+        this.getCommand("ping").setExecutor(new PingCommand());
 
     }
 
