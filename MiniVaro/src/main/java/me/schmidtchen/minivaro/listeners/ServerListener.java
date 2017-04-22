@@ -4,6 +4,7 @@ import me.schmidtchen.minivaro.MiniVaro;
 import me.schmidtchen.minivaro.configs.MainConfig;
 import me.schmidtchen.minivaro.utils.VaroLocation;
 import net.cubespace.Yamler.Config.InvalidConfigurationException;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,6 +49,8 @@ public class ServerListener implements Listener {
         if (player.getWorld().getName().equals("varo")) {
             player.teleport(MiniVaro.getInstance().getServer().getWorld("world").getSpawnLocation());
         }
+
+        player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(8);
 
         MainConfig mainConfig = MiniVaro.getInstance().getMainConfig();
         if (!mainConfig.getPlayers().containsKey(player.getUniqueId().toString()) || !mainConfig.getPlayers().get(player.getUniqueId().toString()).equals(player.getName())) {
