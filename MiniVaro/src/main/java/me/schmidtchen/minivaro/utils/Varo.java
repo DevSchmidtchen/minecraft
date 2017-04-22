@@ -44,8 +44,7 @@ public class Varo {
             player.getInventory().setChestplate(new ItemStack(Material.AIR));
             player.getInventory().setHelmet(new ItemStack(Material.AIR));
             player.setHealth(20.0);
-            player.setFoodLevel(20);
-            player.setSaturation(5F);
+            player.setFoodLevel(6);
             player.setLevel(0);
             player.setExp(0);
             player.setGameMode(GameMode.SURVIVAL);
@@ -69,6 +68,9 @@ public class Varo {
                     setVaroState(VaroState.RUNNING);
                     for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
                         player.setWalkSpeed(0.2F);
+                        player.setFoodLevel(20);
+                        player.setExhaustion(0);
+                        player.setSaturation(5F);
                         TitleAPI.sendTitle(player, 5, 35, 10, "§6Go!", "§aViel Spaß!");
                         MiniVaro.getInstance().getServer().getScheduler().runTaskAsynchronously(MiniVaro.getInstance(), new Runnable() {
                             @Override

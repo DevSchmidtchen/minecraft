@@ -8,6 +8,7 @@ import me.schmidtchen.minivaro.utils.VaroState;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.WorldCreator;
+import org.bukkit.WorldType;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
@@ -56,7 +57,7 @@ public class WorldManager {
     }
 
     public void loadWorlds() {
-        MiniVaro.getInstance().getServer().createWorld(new WorldCreator("varo"));
+        MiniVaro.getInstance().getServer().createWorld(new WorldCreator("varo").type(WorldType.NORMAL));
         if (MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.RUNNING)) {
             WorldBorder worldBorder = MiniVaro.getInstance().getServer().getWorld("varo").getWorldBorder();
             if (MiniVaro.getInstance().getMainConfig().getVaroCenter() == null || MiniVaro.getInstance().getMainConfig().getVaroCenter().getWorld() == null) {
@@ -67,6 +68,7 @@ public class WorldManager {
             worldBorder.setSize(500);
         }
         WorldCreator worldCreator = new WorldCreator("varo_nether");
+        worldCreator.type(WorldType.NORMAL);
         worldCreator.environment(World.Environment.NETHER);
         MiniVaro.getInstance().getServer().createWorld(worldCreator);
     }

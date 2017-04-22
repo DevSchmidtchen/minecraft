@@ -3,11 +3,13 @@ package me.schmidtchen.minivaro.listeners;
 import me.schmidtchen.minivaro.MiniVaro;
 import me.schmidtchen.minivaro.configs.MainConfig;
 import me.schmidtchen.minivaro.utils.VaroLocation;
+import me.schmidtchen.minivaro.utils.VaroState;
 import net.cubespace.Yamler.Config.InvalidConfigurationException;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -86,6 +88,11 @@ public class ServerListener implements Listener {
         } catch (InvalidConfigurationException e) {
             e.printStackTrace();
         }
+    }
+
+    @EventHandler
+    public void onFoodLevelChange(FoodLevelChangeEvent event) {
+        event.setCancelled(MiniVaro.getInstance().getVaro().getVaroState() == VaroState.COUNTDOWN);
     }
 
 }
