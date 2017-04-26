@@ -2,6 +2,7 @@ package me.schmidtchen.minivaro.listeners;
 
 import me.schmidtchen.minivaro.MiniVaro;
 import me.schmidtchen.minivaro.utils.VaroState;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -19,7 +20,9 @@ public class BlockListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         if (event.getBlock().getWorld().getName().equals("varo")) {
-            event.setCancelled(MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.COUNTDOWN));
+            if (MiniVaro.getInstance().getVaro().getVaroState() == VaroState.COUNTDOWN || (MiniVaro.getInstance().getVaro().getVaroState() == VaroState.STARTING && !(event.getPlayer().getGameMode() == GameMode.CREATIVE))) {
+                event.setCancelled(true);
+            }
         }
     }
 

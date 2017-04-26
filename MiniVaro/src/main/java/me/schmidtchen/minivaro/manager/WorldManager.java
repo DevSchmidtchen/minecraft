@@ -39,7 +39,7 @@ public class WorldManager {
             if (MiniVaro.getInstance().getTeamManager().hasTeam(player) && !MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).isDead() && MiniVaro.getInstance().getVaro().checkVaroSession(player)) {
                 MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).setBuildLocation(new VaroLocation(player.getLocation()));
                 loadWorlds();
-                player.teleport(MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getVaroLocation() == null ? MiniVaro.getInstance().getServer().getWorld("varo").getSpawnLocation() : MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getVaroLocation().toBukkitLocation());
+                player.teleport(MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getVaroLocation() == null ? (MiniVaro.getInstance().getMainConfig().getVaroCenter() != null ? MiniVaro.getInstance().getMainConfig().getVaroCenter().toBukkitLocation() : MiniVaro.getInstance().getServer().getWorld("varo").getSpawnLocation()) : MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).getVaroLocation().toBukkitLocation());
                 player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(8);
                 inVaro.add(player);
                 if (player.isOp() && MiniVaro.getInstance().getVaro().getVaroState().equals(VaroState.RUNNING)) {

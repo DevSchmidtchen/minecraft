@@ -36,7 +36,7 @@ public class Varo {
     }
 
     public void start() {
-        for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
+        for (Player player : MiniVaro.getInstance().getWorldManager().getInVaro()) {
             player.setWalkSpeed(0);
             player.getInventory().clear();
             player.getInventory().setBoots(new ItemStack(Material.AIR));
@@ -66,12 +66,16 @@ public class Varo {
                 }
                 if (countdown == 0) {
                     setVaroState(VaroState.RUNNING);
-                    for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
+                    for (Player player : MiniVaro.getInstance().getWorldManager().getInVaro()) {
                         player.setWalkSpeed(0.2F);
                         player.setFoodLevel(20);
                         player.setExhaustion(0);
                         player.setSaturation(5F);
                         TitleAPI.sendTitle(player, 5, 35, 10, "§6Go!", "§aViel Spaß!");
+                        if (player.isOp()) {
+                            MiniVaro.getInstance().getWorldManager().getOperators().add(player);
+                            player.setOp(false);
+                        }
                         MiniVaro.getInstance().getServer().getScheduler().runTaskAsynchronously(MiniVaro.getInstance(), new Runnable() {
                             @Override
                             public void run() {
@@ -80,12 +84,6 @@ public class Varo {
                         });
                     }
                     MiniVaro.getInstance().getServer().broadcastMessage(MiniVaro.getInstance().getPrefix() + "§aLos geht's!");
-                    for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
-                        if (player.isOp()) {
-                            MiniVaro.getInstance().getWorldManager().getOperators().add(player);
-                            player.setOp(false);
-                        }
-                    }
                     MiniVaro.getInstance().getWorldManager().loadWorlds();
                     MiniVaro.getInstance().getServer().getScheduler().cancelTask(scheduler);
                 }

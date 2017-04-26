@@ -46,7 +46,7 @@ public class ScoreboardManager {
     public void updateScoreboard() {
         for (Player player : MiniVaro.getInstance().getServer().getOnlinePlayers()) {
             if (MiniVaro.getInstance().getTeamManager().hasTeam(player)) {
-                Team team = scoreboard.getTeam(player.getName());
+                Team team = scoreboard.getTeam(player.getName()) != null ? scoreboard.getTeam(player.getName()) : scoreboard.registerNewTeam(player.getName());
                 VaroTeam varoTeam = MiniVaro.getInstance().getTeamManager().getTeamByPlayer(player.getUniqueId().toString());
                 team.setPrefix(MiniVaro.getInstance().getChatColor(varoTeam.getColor()) + varoTeam.getName() + " §7| ");
                 if (MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).isDead()) {

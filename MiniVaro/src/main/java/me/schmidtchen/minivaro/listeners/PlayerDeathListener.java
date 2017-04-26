@@ -30,16 +30,16 @@ public class PlayerDeathListener implements Listener {
             MiniVaro.getInstance().getTeamManager().getVaroPlayer(player).setVaroLocation(null);
             player.sendMessage(MiniVaro.getInstance().getPrefix() + "§cDu bist aus Varo ausgeschieden!");
             MiniVaro.getInstance().getServer().broadcastMessage(MiniVaro.getInstance().getPrefix() + player.getDisplayName() + " §cist aus Varo ausgeschieden!");
+            MiniVaro.getInstance().getScoreboardManager().updateScoreboard();
             if (player.getKiller() != null) {
                 Player killer = player.getKiller();
-                MiniVaro.getInstance().getTeamManager().getVaroPlayer(killer).addKill();
                 event.setDeathMessage(MiniVaro.getInstance().getPrefix() + player.getDisplayName() + " §7wurde von " + killer.getDisplayName() + " §7ausgelöscht!");
                 killer.getWorld().playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_THUNDER, 10, 10);
+                MiniVaro.getInstance().getTeamManager().getVaroPlayer(killer).addKill();
             } else {
                 event.setDeathMessage(MiniVaro.getInstance().getPrefix() + player.getDisplayName() + " §7ist gestorben!");
                 player.getWorld().playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_THUNDER, 10, 10);
             }
-            MiniVaro.getInstance().getScoreboardManager().updateScoreboard();
             checkEnd();
         } else {
             event.setKeepInventory(true);
