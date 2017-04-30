@@ -42,7 +42,11 @@ public class EnterNetherListener implements Listener {
         travelAgent.setSearchRadius(50);
         Location newLocation = travelAgent.findOrCreate(location);
 
-        event.setTo(newLocation);
+        if (newLocation != null) {
+            event.setTo(newLocation);
+        } else {
+            player.sendMessage(MiniVaro.getInstance().getPrefix() + "§cEs konnte kein Portal erstellt werden!");
+        }
     }
 
 }
