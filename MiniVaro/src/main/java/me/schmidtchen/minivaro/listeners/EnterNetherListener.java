@@ -39,7 +39,7 @@ public class EnterNetherListener implements Listener {
         event.useTravelAgent(true);
 
         travelAgent.setCanCreatePortal(true);
-        travelAgent.setSearchRadius(10);
+        travelAgent.setSearchRadius(50);
         Location newLocation = travelAgent.findOrCreate(location);
 
         event.setTo(newLocation);

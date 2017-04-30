@@ -34,6 +34,8 @@ public class BlockListener implements Listener {
             if (block.getType() == Material.TNT || block.getType() == Material.LAVA || block.getType() == Material.LAVA_BUCKET || block.getType() == Material.STATIONARY_LAVA) {
                 System.out.println("[VaroBuild] BlockPlace: " + player.getName() + " - " + block.getType().name() + " - " + block.getLocation().getX() + ":" + block.getLocation().getY() + ":" + block.getLocation().getZ());
             }
+        } else if ((MiniVaro.getInstance().getVaro().getVaroState() == VaroState.STARTING && !(player.getGameMode() == GameMode.CREATIVE)) || MiniVaro.getInstance().getVaro().getVaroState() == VaroState.COUNTDOWN) {
+            event.setCancelled(true);
         }
     }
 

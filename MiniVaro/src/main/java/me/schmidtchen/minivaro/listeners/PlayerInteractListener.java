@@ -20,14 +20,13 @@ public class PlayerInteractListener implements Listener {
 
         if (MiniVaro.getInstance().getWorldManager().getInVaro().contains(player) && event.hasBlock() && event.getClickedBlock().getType().equals(Material.CHEST)) {
             Block chest = event.getClickedBlock();
-            System.out.println("[VaroBuild] Teamchest erkannt!");
             for (VaroTeam varoTeam : MiniVaro.getInstance().getTeamManager().getLivingTeams()) {
                 if (varoTeam.getTeamChest() != null && !varoTeam.getTeamChest().isEmpty()) {
-                    System.out.println("[VaroBuild] Teamchest von " + varoTeam.getName() + " wird gecheckt!");
                     if (varoTeam.getTeamChest().stream().anyMatch(location -> location.toBukkitLocation().distance(chest.getLocation()) == 0)) {
                         if (!varoTeam.getMembers().contains(player.getUniqueId().toString())) {
-                            event.setCancelled(true);
                             player.sendMessage(MiniVaro.getInstance().getPrefix() + "Das ist die Teamchest von Team " + MiniVaro.getInstance().getChatColor(varoTeam.getColor()) + varoTeam.getName() + "§7!");
+                            event.setCancelled(true);
+                            break;
                         }
                     }
                 }

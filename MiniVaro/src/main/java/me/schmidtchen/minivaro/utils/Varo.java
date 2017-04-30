@@ -37,6 +37,7 @@ public class Varo {
 
     public void start() {
         for (Player player : MiniVaro.getInstance().getWorldManager().getInVaro()) {
+            player.setGameMode(GameMode.SURVIVAL);
             player.setWalkSpeed(0);
             player.getInventory().clear();
             player.getInventory().setBoots(new ItemStack(Material.AIR));
@@ -47,7 +48,6 @@ public class Varo {
             player.setFoodLevel(6);
             player.setLevel(0);
             player.setExp(0);
-            player.setGameMode(GameMode.SURVIVAL);
             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 61*20, 128, false, false));
         }
         setVaroState(VaroState.COUNTDOWN);
